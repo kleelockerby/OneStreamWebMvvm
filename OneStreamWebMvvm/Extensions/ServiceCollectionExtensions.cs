@@ -10,9 +10,9 @@ namespace OneStreamWebMvvm
         public static IServiceCollection AddViewModels(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<CounterViewModel>();
-            //serviceCollection.AddTransient<WeatherForecastItemViewModel>();
+            serviceCollection.AddTransient<ClockViewModel>();
+            serviceCollection.AddTransient<ParametersViewModel>();
             return serviceCollection;
         }
-        
     }
 }

@@ -12,6 +12,8 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, INotifyPropertyChanging
     {
+        public IServiceProvider ServiceProvider { get; set; } = null!;
+
         public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangingEventHandler PropertyChanging;
 

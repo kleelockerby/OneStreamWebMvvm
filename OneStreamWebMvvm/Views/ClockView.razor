@@ -1,0 +1,31 @@
+﻿@page "/clockview"
+@inherits ComponentViewBase<ClockViewModel>
+@namespace OneStreamWebMvvmm
+
+
+<div style="margin-top: 25px;">
+    <div><h3 style="color: #000;">Counter</h3></div>
+    <div style="margin-top: 20px;">
+        <div style="padding: 10px 0; background-color: #F0F0F0; font-size: .85rem;">
+            <div style="padding: 10px 30px;">
+                Having values updating in the background is no hassle. No need to manually invoke
+                <pre style="display: inline">StateHasChanged()</pre> on the component inside it's synchronization context.
+                That's done for you! Just make sure to update your values using the <pre style="display: inline">Set</pre> method in your view model.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <div style="padding: 10px 0; background-color: #F0F0F0; font-size: .85rem;">
+        <div style="padding: 10px 30px;">
+            This component demonstrates updating from a background task without user interaction.
+        </div>
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <div style="padding: 10px 30px;">
+        Current time: @Bind(x => x.DateTime)
+    </div>
+</div>

@@ -24,29 +24,21 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         protected override void OnInitialized()
         {
-            base.OnInitialized();
             SetBindingContext();
-            SetParameters();
+            base.OnInitialized();
             BindingContext?.OnInitialized();
         }
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            return BindingContext?.OnInitializedAsync() ?? Task.CompletedTask;
+            await base.OnInitializedAsync();
+            await BindingContext!.OnInitializedAsync();
         }
 
         private void SetBindingContext()
         {
-            BindingContext ??= ServiceProvider.GetRequiredService<TViewModel>();
-        }
-
-        public TValue Bind<TValue>(Expression<Func<TViewModel, TValue>> property)
-        {
-            if (BindingContext is null)
-            {
-                throw new InvalidOperationException($"{nameof(BindingContext)} is not set");
-            }
-            return AddBinding(BindingContext, property);
+            BindingContext ??= ServiceProvider?.GetRequiredService<TViewModel>();
+            BindingContext.ServiceProvider = ServiceProvider;
         }
 
         private void SetParameters()
@@ -59,15 +51,26 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             viewModelParameterSetter.ResolveAndSet(this, BindingContext);
         }
 
+        public TValue Bind<TValue>(Expression<Func<TViewModel, TValue>> property)
+        {
+            if (BindingContext is null)
+            {
+                throw new InvalidOperationException($"{nameof(BindingContext)} is not set");
+            }
+            return AddBinding(BindingContext, property);
+        }
+
         protected override void OnParametersSet()
         {
             SetParameters();
+            base.OnParametersSet();
             BindingContext?.OnParametersSet();
         }
 
-        protected override Task OnParametersSetAsync()
+        protected override async Task OnParametersSetAsync()
         {
-            return BindingContext?.OnParametersSetAsync() ?? Task.CompletedTask;
+            await base.OnParametersSetAsync();
+            await BindingContext.OnParametersSetAsync();
         }
 
         protected override bool ShouldRender()
@@ -80,17 +83,19 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             BindingContext?.OnAfterRender(firstRender);
         }
 
-        protected override Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            return BindingContext?.OnAfterRenderAsync(firstRender) ?? Task.CompletedTask;
+            await base.OnAfterRenderAsync(firstRender);
+            await BindingContext!.OnAfterRenderAsync(firstRender);
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
-            await base.SetParametersAsync(parameters).ConfigureAwait(false);
+            await base.SetParametersAsync(parameters);
+
             if (BindingContext != null)
             {
-                await BindingContext.SetParametersAsync(parameters).ConfigureAwait(false);
+                await BindingContext.SetParametersAsync(parameters);
             }
         }
     }

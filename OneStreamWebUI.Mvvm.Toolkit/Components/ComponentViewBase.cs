@@ -12,12 +12,9 @@ namespace OneStreamWebUI.Mvvm.Toolkit
     public class ComponentViewBase : ComponentBase
     {
         private IBinder binder = null!;
-        protected bool IsDisposed { get; private set; }
         private int index = 1;
 
-        public bool IsInitialized { get; set; }
-
-        [Inject] protected IServiceProvider ServiceProvider { get; set; } = null!;
+        [Inject] protected IServiceProvider ServiceProvider { get; set; } = default!;
 
         protected ComponentViewBase() { }
         protected internal ComponentViewBase(IServiceProvider serviceProvider)
@@ -28,7 +25,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         protected override void OnInitialized()
         {
-            this.IsInitialized = true;
+            base.OnInitialized();
             InitializeDependencies();
         }
 
@@ -53,6 +50,5 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             Console.WriteLine($"StateHasChanged ViewComponentBase, Count:{index++}");
             InvokeAsync(StateHasChanged);
         }
-
     }
 }
