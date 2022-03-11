@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    internal interface IBinding : IDisposable
+    public interface IBinding : IDisposable
     {
         INotifyPropertyChanged Source { get; }
         PropertyInfo PropertyInfo { get; }
