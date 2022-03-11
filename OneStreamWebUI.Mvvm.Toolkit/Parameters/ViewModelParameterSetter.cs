@@ -1,41 +1,41 @@
 ﻿using System;
-using System.Reflection;
+using System.ComponentModel;
 using Microsoft.AspNetCore.Components;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
     internal class ViewModelParameterSetter : IViewModelParameterSetter
     {
-        private readonly IParameterCache parameterCache;
         private readonly IParameterResolver parameterResolver;
 
-        public ViewModelParameterSetter(IParameterResolver iparameterResolver, IParameterCache iparameterCache)
+        public ViewModelParameterSetter(IParameterResolver ParameterResolver)
         {
-            parameterResolver = iparameterResolver ?? throw new ArgumentNullException(nameof(iparameterResolver));
-            parameterCache = iparameterCache ?? throw new ArgumentNullException(nameof(iparameterCache));
+            this.parameterResolver = ParameterResolver;
         }
 
         public void ResolveAndSet(ComponentBase component, ViewModelBase viewModel)
         {
-            if (component == null) throw new ArgumentNullException(nameof(component));
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+            var componentType = component.GetType();
+            var viewModelType = viewModel.GetType();
 
-            Type? componentType = component.GetType();
-
-            ParameterInfo? parameterInfo = parameterCache.Get(componentType);
-            if (parameterInfo == null)
-            {
-                var componentParameters = parameterResolver.ResolveParameters(componentType);
-                var viewModelParameters = parameterResolver.ResolveParameters(viewModel.GetType());
-                parameterInfo = new ParameterInfo(componentParameters, viewModelParameters);
-                parameterCache.Set(componentType, parameterInfo);
-            }
-
-            foreach ((PropertyInfo componentProperty, PropertyInfo viewModelProperty) in parameterInfo.Parameters)
+            var parameterInfo = parameterResolver.ResolveParameters(componentType, viewModelType);
+            foreach (var (componentProperty, viewModelProperty) in parameterInfo.Parameters)
             {
                 var value = componentProperty.GetValue(component);
+                var parameterTypeDiffers = componentProperty.PropertyType != viewModelProperty.PropertyType;
+                if (value != null && parameterTypeDiffers)
+                {
+                    value = ConvertValue(componentProperty.PropertyType, viewModelProperty.PropertyType, value);
+                }
+
                 viewModelProperty.SetValue(viewModel, value);
             }
+        }
+
+        private static object? ConvertValue(Type componentType, Type viewModelType, object value)
+        {
+            var converter = TypeDescriptor.GetConverter(viewModelType);
+            return converter.CanConvertFrom(componentType) ? converter.ConvertTo(value, viewModelType) : value;
         }
     }
 }

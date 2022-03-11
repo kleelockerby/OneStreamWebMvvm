@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace OneStreamWebUI.Mvvm
+namespace OneStreamWebUI.Mvvm.Toolkit
 {
     internal interface IParameterResolver
     {
-        IEnumerable<PropertyInfo> ResolveParameters(Type memberType);
+        ParameterInfo ResolveParameters(Type componentType, Type viewModelType);
     }
 }
