@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
     public class ParameterCache : IParameterCache
     {
-        private readonly Dictionary<Type, ParameterInfo> cache = new();
+        private readonly ConcurrentDictionary<Type, ParameterInfo> cache = new();
 
         public ParameterInfo? Get(Type type)
         {

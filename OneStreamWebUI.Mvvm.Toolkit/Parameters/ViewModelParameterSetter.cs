@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public class ViewModelParameterSetter : IViewModelParameterSetter
+    internal class ViewModelParameterSetter : IViewModelParameterSetter
     {
         private readonly IParameterCache parameterCache;
         private readonly IParameterResolver parameterResolver;

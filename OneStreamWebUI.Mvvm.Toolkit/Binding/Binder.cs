@@ -36,7 +36,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
                 throw new BindingException($"{nameof(ValueChangedCallback)} is null");
             }
 
-            var propertyInfo = ValidateAndResolveBindingContext(viewModel, propertyExpression);
+            var propertyInfo = ResolveBindingContext(viewModel, propertyExpression);
 
             var binding = bindingFactory.Create(viewModel, propertyInfo, weakEventManager);
             if (bindings.Contains(binding))
@@ -52,30 +52,41 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             return (TValue)binding.GetValue();
         }
 
-        protected static PropertyInfo ValidateAndResolveBindingContext<TViewModel, TValue>( TViewModel viewModel, Expression<Func<TViewModel, TValue>> property) where TViewModel : ViewModelBase
+        protected static PropertyInfo ResolveBindingContext<TViewModel, TValue>(TViewModel viewModel, Expression<Func<TViewModel, TValue>> property)
         {
-            if (viewModel is null)
+            string propertyName = string.Empty;
+            try
             {
-                throw new BindingException("ViewModelType is null");
+                if ((viewModel != null) && (property != null))
+                {
+                    if (property.Body is MemberExpression m)
+                    {
+                        if (m.Member is PropertyInfo propertyInfo)
+                        {
+                            if (typeof(TViewModel).GetProperty(propertyInfo.Name) is not null)
+                            {
+                                propertyName = propertyInfo.Name;
+                                return propertyInfo;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw new BindingException($"Cannot find property {propertyName} in type {viewModel.GetType().FullName}");
+                    }
+                }
             }
-
-            if (property is null)
+            catch (BindingException)
             {
-                throw new BindingException("Property expression is null");
+                throw new BindingException($"Cannot find property {propertyName} in type {viewModel.GetType().FullName}");
             }
-
-            if (property.Body is not MemberExpression { Member: PropertyInfo p })
+            catch (Exception ex)
             {
-                throw new BindingException("Binding member needs to be a property");
+                throw new Exception($"An Unknow Exception Occured: {ex.Message}");
             }
-
-            if (typeof(TViewModel).GetProperty(p.Name) is null)
-            {
-                throw new BindingException($"Cannot find property {p.Name} in type {viewModel.GetType().FullName}");
-            }
-
-            return p;
+            return null!;
         }
+        
 
         #region IDisposable
 

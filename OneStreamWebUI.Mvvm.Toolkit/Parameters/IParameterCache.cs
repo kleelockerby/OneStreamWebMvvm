@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public interface IParameterCache
+    internal interface IParameterCache
     {
         ParameterInfo? Get(Type type);
         void Set(Type type, ParameterInfo info);

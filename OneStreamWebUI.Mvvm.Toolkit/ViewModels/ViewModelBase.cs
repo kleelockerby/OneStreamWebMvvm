@@ -98,7 +98,6 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         protected void StateHasChanged()
         {
-            //Console.WriteLine($"StateHasChanged - ViewModelBase");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
 

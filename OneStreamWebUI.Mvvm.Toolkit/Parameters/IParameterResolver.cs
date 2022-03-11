@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace OneStreamWebUI.Mvvm
 {
-    public interface IParameterResolver
+    internal interface IParameterResolver
     {
         IEnumerable<PropertyInfo> ResolveParameters(Type memberType);
     }

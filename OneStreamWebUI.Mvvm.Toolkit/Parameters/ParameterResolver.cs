@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public class ParameterResolver : IParameterResolver
+    internal class ParameterResolver : IParameterResolver
     {
         public IEnumerable<PropertyInfo> ResolveParameters(Type memberType)
         {

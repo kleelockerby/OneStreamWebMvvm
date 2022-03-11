@@ -54,40 +54,5 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             InvokeAsync(StateHasChanged);
         }
 
-        protected static PropertyInfo ResolveBindingContext<TViewModel, TValue>(TViewModel viewModel, Expression<Func<TViewModel, TValue>> property)
-        {
-            string propertyName = string.Empty;
-            try
-            {
-                if ((viewModel != null) && (property != null))
-                {
-                    if (property.Body is MemberExpression m)
-                    {
-                        if (m.Member is PropertyInfo propertyInfo)
-                        {
-                            if (typeof(TViewModel).GetProperty(propertyInfo.Name) is not null)
-                            {
-                                propertyName = propertyInfo.Name;
-                                return propertyInfo;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new BindingException($"Cannot find property {propertyName} in type {viewModel.GetType().FullName}");
-                    }
-                }
-            }
-            catch (BindingException)
-            {
-                throw new BindingException($"Cannot find property {propertyName} in type {viewModel.GetType().FullName}");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"An Unknow Exception Occured: {ex.Message}");
-            }
-            return null!;
-        }
-
     }
 }
