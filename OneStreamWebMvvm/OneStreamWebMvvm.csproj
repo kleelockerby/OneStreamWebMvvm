@@ -13,4 +13,8 @@
     <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OneStreamWebUI.Mvvm.Toolkit\OneStreamWebUI.Mvvm.Toolkit.csproj" />
+  </ItemGroup>
+
 </Project>

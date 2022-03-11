@@ -3,16 +3,16 @@ using System;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
-using MvvmBlazor.Components;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    internal class ComponentViewBase : ComponentBase, IDisposable
+    public class ComponentViewBase : ComponentBase, IDisposable
     {
         private AsyncServiceScope? scope;
 
         [Inject] IServiceScopeFactory ScopeFactory { get; set; } = default!;
         [Inject] protected IServiceProvider RootServiceProvider { get; set; } = default!;
+
         protected bool IsDisposed { get; private set; }
 
         public IBinder Binder { get; private set; } = null!;

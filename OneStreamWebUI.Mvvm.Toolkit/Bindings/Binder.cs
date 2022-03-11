@@ -27,9 +27,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         public Action<IBinding, EventArgs>? ValueChangedCallback { get; set; }
 
-        public TValue Bind<TViewModel, TValue>(
-            TViewModel viewModel,
-            Expression<Func<TViewModel, TValue>> propertyExpression) where TViewModel : ViewModelBase
+        public TValue Bind<TViewModel, TValue>( TViewModel viewModel, Expression<Func<TViewModel, TValue>> propertyExpression) where TViewModel : ViewModelBase
         {
             ThrowIfDisposed();
 
@@ -54,9 +52,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             return (TValue)binding.GetValue();
         }
 
-        protected static PropertyInfo ValidateAndResolveBindingContext<TViewModel, TValue>(
-            TViewModel viewModel,
-            Expression<Func<TViewModel, TValue>> property) where TViewModel : ViewModelBase
+        protected static PropertyInfo ValidateAndResolveBindingContext<TViewModel, TValue>( TViewModel viewModel, Expression<Func<TViewModel, TValue>> property) where TViewModel : ViewModelBase
         {
             if (viewModel is null)
             {

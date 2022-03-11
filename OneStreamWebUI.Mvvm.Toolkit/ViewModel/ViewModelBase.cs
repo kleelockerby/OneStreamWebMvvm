@@ -18,7 +18,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected bool Set<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
         {
             if (!EqualityComparer<T>.Default.Equals(field, value))
             {

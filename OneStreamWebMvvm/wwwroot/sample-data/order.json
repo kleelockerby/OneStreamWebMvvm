@@ -1,0 +1,72 @@
+[
+	{
+		"OrderID" : 10001,
+		"OrderDate" : "2018-06-06",
+		"Freight": 2.32,
+		"CustomerID": "ALFKI",
+		"CustomerName": "Alfreds Futterkiste"
+	},
+	{
+		"OrderID" : 10002,
+		"OrderDate" : "2018-04-16",
+		"Freight": 4.32,
+		"CustomerID": "AROUT",
+		"CustomerName":"Around the Horn"
+	},
+	{
+		"OrderID" : 10003,
+		"OrderDate" : "2019-02-02",
+		"Freight": 6.25,
+		"CustomerID": "BONAP",
+		"CustomerName":"Bon app"
+	},
+	{
+		"OrderID" : 10004,
+		"OrderDate" : "2017-11-16",
+		"Freight": 5.26,
+		"CustomerID": "CHOPS",
+		"CustomerName":"Chop-Suey Chinese"
+	},
+	{
+		"OrderID" : 10005,
+		"OrderDate" : "2018-09-04",
+		"Freight": 4.21,
+		"CustomerID": "GREAL",
+		"CustomerName":"Great Lakes Food Market"
+	},
+	{
+		"OrderID" : 10006,
+		"OrderDate" : "2019-025-16",
+		"Freight": 4.01,
+		"CustomerID": "HANAR",
+		"CustomerName": "Hanari Carnes"
+	},
+	{
+		"OrderID" : 10007,
+		"OrderDate" : "2017-07-26",
+		"Freight": 7.21,
+		"CustomerID": "LONEP",
+		"CustomerName":"Lonesome Pine Restaurant"
+	},
+	{
+		"OrderID" : 10008,
+		"OrderDate" : "2019-08-25",
+		"Freight": 5.32,
+		"CustomerID": "MAISD",
+		"CustomerName":"Maison Dewey"
+	},
+	{
+		"OrderID" : 10009,
+		"OrderDate" : "2017-03-11",
+		"Freight": 8.32,
+		"CustomerID": "OLDWO",
+		"CustomerName":"Old World Delicatessen"
+	},
+	{
+		"OrderID" : 10010,
+		"OrderDate" : "2017-10-13",
+		"Freight": 6.11,
+		"CustomerID": "Quick",
+		"CustomerName":"QUICK-Stop"
+	}
+]

@@ -5,11 +5,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    internal interface IParameterResolver
-    {
-        ParameterInfo ResolveParameters(Type componentType, Type viewModelType);
-    }
-
     internal class ParameterResolver : IParameterResolver
     {
         private readonly IParameterCache parameterCache;
@@ -39,8 +34,8 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         private static IEnumerable<PropertyInfo> ResolveTypeParameters(Type memberType)
         {
             var componentProperties = memberType.GetProperties();
-
             var resolvedComponentProperties = new List<PropertyInfo>();
+
             foreach (var componentProperty in componentProperties)
             {
                 // Skip if property has no public setter
@@ -50,7 +45,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
                 }
 
                 // If the property is marked as a parameter add it to the list
-                var parameterAttribute = componentProperty.GetCustomAttribute<ParameterAttribute>();
+                ParameterAttribute? parameterAttribute = componentProperty.GetCustomAttribute<ParameterAttribute>();
                 if (parameterAttribute != null)
                 {
                     resolvedComponentProperties.Add(componentProperty);

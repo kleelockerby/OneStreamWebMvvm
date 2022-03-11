@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    internal class ComponentViewBase<TViewModel> : ComponentViewBase where TViewModel : ViewModelBase
+    public class ComponentViewBase<TViewModel> : ComponentViewBase where TViewModel : ViewModelBase
     {
         private IViewModelParameterSetter? viewModelParameterSetter;
 
