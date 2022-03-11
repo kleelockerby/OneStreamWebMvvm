@@ -5,15 +5,16 @@ using System.Reflection;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    internal record ParameterInfo
+    public class ParameterInfo
     {
         private readonly Dictionary<PropertyInfo, PropertyInfo> parameters = new();
 
-        public IReadOnlyDictionary<PropertyInfo, PropertyInfo> Parameters => parameters;
-
         public ParameterInfo(IEnumerable<PropertyInfo> componentProperties, IEnumerable<PropertyInfo> viewModelProperties)
         {
-            var viewModelPropDict = viewModelProperties.ToDictionary(x => x.Name);
+            if (componentProperties == null) throw new ArgumentNullException(nameof(componentProperties));
+            if (viewModelProperties == null) throw new ArgumentNullException(nameof(viewModelProperties));
+
+            Dictionary<string, PropertyInfo> viewModelPropDict = viewModelProperties.ToDictionary(x => x.Name);
 
             foreach (var componentProperty in componentProperties)
             {
@@ -25,5 +26,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
                 parameters.Add(componentProperty, viewModelProperty);
             }
         }
+
+        public IReadOnlyDictionary<PropertyInfo, PropertyInfo> Parameters => parameters;
     }
 }

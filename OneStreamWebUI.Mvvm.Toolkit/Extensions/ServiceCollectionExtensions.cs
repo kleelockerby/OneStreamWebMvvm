@@ -11,7 +11,8 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             serviceCollection.AddSingleton<IParameterCache, ParameterCache>();
             serviceCollection.AddSingleton<IViewModelParameterSetter, ViewModelParameterSetter>();
             serviceCollection.AddTransient<IWeakEventManager, WeakEventManager>();
-            serviceCollection.AddTransient<IBinder, Binder>();
+            serviceCollection.AddSingleton<IMessageAggregator, MessageAggregator>();
+            serviceCollection.AddHttpContextAccessor();
             return serviceCollection;
         }
     }
