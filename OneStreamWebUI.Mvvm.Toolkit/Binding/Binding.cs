@@ -7,7 +7,10 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 {
     internal class Binding : IBinding
     {
-        private readonly IWeakEventManager weakEventManager; 
+        private readonly IWeakEventManager weakEventManager;
+        private INotifyCollectionChanged? boundCollection;
+        private bool isCollection;
+
         public INotifyPropertyChanged Source { get; }
         public PropertyInfo PropertyInfo { get; }
 
@@ -22,6 +25,8 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         public void Initialize()
         {
+            isCollection = typeof(INotifyCollectionChanged).IsAssignableFrom(PropertyInfo.PropertyType);
+            AddCollectionBindings();
             weakEventManager.AddWeakEventListener(Source, SourceOnPropertyChanged);
         }
 
@@ -44,6 +49,34 @@ namespace OneStreamWebUI.Mvvm.Toolkit
                 return;
             }
 
+            if (isCollection)
+            {
+                // If our binding is a collection binding we need to remove the event
+                // and reinitialize the collection bindings
+                if (boundCollection != null)
+                {
+                    weakEventManager.RemoveWeakEventListener(boundCollection);
+                }
+
+                AddCollectionBindings();
+            }
+
+            BindingValueChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void AddCollectionBindings()
+        {
+            if (!isCollection || GetValue() is not INotifyCollectionChanged collection)
+            {
+                return;
+            }
+
+            weakEventManager.AddWeakEventListener(collection, OnCollectionChanged);
+            boundCollection = collection;
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
             BindingValueChanged?.Invoke(this, EventArgs.Empty);
         }
 

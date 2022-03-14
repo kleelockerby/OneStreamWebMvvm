@@ -34,13 +34,13 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             await base.OnInitializedAsync();
             await BindingContext!.OnInitializedAsync();
         }
-
+#nullable disable
         private void SetBindingContext()
         {
             BindingContext ??= ServiceProvider?.GetRequiredService<TViewModel>();
             BindingContext.ServiceProvider = ServiceProvider;
         }
-
+#nullable enable
         private void SetParameters()
         {
             if (BindingContext is null)

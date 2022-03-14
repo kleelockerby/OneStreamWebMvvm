@@ -12,6 +12,8 @@ namespace OneStreamWebMvvm
             serviceCollection.AddTransient<CounterViewModel>();
             serviceCollection.AddTransient<ClockViewModel>();
             serviceCollection.AddTransient<ParametersViewModel>();
+            serviceCollection.AddTransient<WeatherForecastViewModel>();
+            serviceCollection.AddTransient<WeatherForecastsViewModel>();
             return serviceCollection;
         }
     }

@@ -11,7 +11,7 @@ namespace OneStreamWebMvvm
             this.httpClient = httpClient;
         }
 
-        public Task<IEnumerable<WeatherForecastModel>> GetForecasts()
+        public Task<IEnumerable<WeatherForecastModel>>? GetForecasts()
         {
             return httpClient.GetFromJsonAsync<IEnumerable<WeatherForecastModel>>("sample-data/weather.json")!;
         }

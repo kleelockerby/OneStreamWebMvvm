@@ -1,0 +1,54 @@
+﻿@page "/weatherforecastsview"
+@inherits ComponentViewBase<WeatherForecastsViewModel>
+@namespace OneStreamWebMvvm
+@using OneStreamWebUI.Mvvm.Toolkit
+
+
+<div style="margin-top: 25px;">
+    <div><h3 style="color: #000;">Counter</h3></div>
+    <div style="margin-top: 20px;">
+        <div style="padding: 10px 0; background-color: #F0F0F0; font-size: .85rem;">
+            <div style="padding: 10px 30px;">
+                Weather Forecasts View
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (Bind(x => x.Forecasts) == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div style="margin-top: 10px;">Number of Forecasts = @BindingContext.Forecasts.Count</div>
+    <div style="margin-top: 10px;">ActionType = @BindingContext.ActionType</div>
+
+    <div style="margin-top: 10px;"><button class="btn btn-primary" @onclick="@BindingContext.RandomizeData">Randomize</button></div>
+    <div style="margin-top: 10px;"><button class="btn btn-primary" @onclick="@BindingContext.AddForecast">Add Forecast</button></div>
+
+    <div style="margin-top: 20px;">
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+           @foreach (var forecast in Bind(x => x.Forecasts)!)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@Bind(forecast, x => x.TemperatureC)°C</td>
+                    <td>@Bind(forecast, x => x.TemperatureF)°F</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+}
