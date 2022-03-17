@@ -8,6 +8,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
     public class ViewModelCollectionBase<TViewModel> : ViewModelBase, IList<TViewModel>, INotifyCollectionChanged where TViewModel : class
     {
         private List<TViewModel> list = new List<TViewModel>();
+
         public List<TViewModel> List { get => list; set => list = value; }
 
         public int Count => list.Count;

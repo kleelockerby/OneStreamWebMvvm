@@ -18,6 +18,7 @@ namespace OneStreamWebMvvm
             serviceCollection.AddTransient<OrderViewModel>();
             serviceCollection.AddTransient<OrdersViewModel>();
             serviceCollection.AddTransient<OrdersGridViewModel>();
+            serviceCollection.AddTransient<OrdersGridModelViewModel>();
             return serviceCollection;
         }
 
