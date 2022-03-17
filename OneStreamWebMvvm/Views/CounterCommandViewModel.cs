@@ -39,7 +39,7 @@ namespace OneStreamWebMvvm
 
         public void IncrementCount()
         {
-            if (UpdateCommand.CanExecuteTarget())
+            if (UpdateCommand.CanExecuteCommand())
                 currentCount++;
             else
             {

@@ -9,13 +9,13 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         private Action? canExecuteChanged;
         private bool canExecute;
 
-        public Func<bool> TargetCanExecuteMethod;
+        public Func<bool> CanExecuteCommand;
 
-        public bool CanExecuteTarget()
+        public bool CanExecuteCommandValue()
         {
-            if (TargetCanExecuteMethod != null)
+            if (CanExecuteCommand != null)
             {
-                return TargetCanExecuteMethod();
+                return CanExecuteCommand();
             }
             return false;
         }
@@ -36,7 +36,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         public RelayCommand(Action Execute, Func<bool> canExecuteTarget, Action CanExecuteChanged)
         {
             this.execute = Execute;
-            this.TargetCanExecuteMethod = canExecuteTarget;
+            this.CanExecuteCommand = canExecuteTarget;
             this.canExecuteChanged = CanExecuteChanged;
         }
 
