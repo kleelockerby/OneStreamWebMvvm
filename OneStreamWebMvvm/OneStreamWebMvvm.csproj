@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\Button\" />
+    <Folder Include="Components\ButtonCommand\" />
   </ItemGroup>
 
 </Project>

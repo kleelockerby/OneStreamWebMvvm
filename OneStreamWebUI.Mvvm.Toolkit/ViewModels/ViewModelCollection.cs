@@ -5,28 +5,29 @@ using System.ComponentModel;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public class ViewModelCollectionBase<TViewModel> : ViewModelBase, IList<TViewModel>, INotifyCollectionChanged where TViewModel : class
+    public class ViewModelCollection<TItem> : IList<TItem>, INotifyCollectionChanged where TItem : class
     {
-        private List<TViewModel> list = new List<TViewModel>();
-        public List<TViewModel> List { get => list; set => list = value; }
+        private List<TItem> list = new List<TItem>();
+        public List<TItem> List { get => list; set => list = value; }
 
         public int Count => list.Count;
         public bool IsReadOnly => false;
 
+        public event PropertyChangedEventHandler? PropertyChanged;
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
-        public ViewModelCollectionBase() { }
-        public ViewModelCollectionBase(IEnumerable<TViewModel> viewModel)
+        public ViewModelCollection() { }
+        public ViewModelCollection(IEnumerable<TItem> item)
         {
-            this.list = viewModel.ToList();
+            this.list = item.ToList();
         }
 
-        public void InitializeList(IEnumerable<TViewModel> viewModel)
+        public void Initialize(IEnumerable<TItem> item)
         {
-            this.list = viewModel.ToList();
+            this.list = item.ToList();
         }
 
-        public TViewModel this[int index]
+        public TItem this[int index]
         {
             get => list[index];
             set
@@ -39,21 +40,21 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             }
         }
 
-        public void Add(TViewModel viewModel)
+        public void Add(TItem item)
         {
-            list.Add(viewModel);
+            list.Add(item);
             this.OnCountPropertyChanged();
             this.OnIndexerPropertyChanged();
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, viewModel));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
         }
 
-        public bool Contains(TViewModel item)
+        public bool Contains(TItem item)
         {
             return list.Contains(item);
 
         }
 
-        public void CopyTo(TViewModel[] array, int arrayIndex)
+        public void CopyTo(TItem[] array, int arrayIndex)
         {
             list.CopyTo(array, arrayIndex);
         }
@@ -66,12 +67,12 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             OnCollectionReset();
         }
 
-        public int IndexOf(TViewModel viewModel)
+        public int IndexOf(TItem item)
         {
-            return list.IndexOf(viewModel);
+            return list.IndexOf(item);
         }
 
-        public void Insert(int index, TViewModel item)
+        public void Insert(int index, TItem item)
         {
             list.Insert(index, item);
             this.OnCountPropertyChanged();
@@ -79,7 +80,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
         }
 
-        public bool Remove(TViewModel item)
+        public bool Remove(TItem item)
         {
             int index = IndexOf(item);
             if (index >= 0)
@@ -106,7 +107,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
         }
 
-        public void AddRange(IEnumerable<TViewModel> items)
+        public void AddRange(IEnumerable<TItem> items)
         {
             foreach (var item in items)
             {
@@ -114,7 +115,9 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             }
         }
 
-        public IEnumerator<TViewModel> GetEnumerator()
+        private static List<TItem> CreateCopy(IEnumerable<TItem> collection, string paramName) => collection != null ? new List<TItem>(collection) : throw new ArgumentNullException(paramName);
+
+        public IEnumerator<TItem> GetEnumerator()
         {
             return list.GetEnumerator();
         }
@@ -122,6 +125,21 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         IEnumerator IEnumerable.GetEnumerator()
         {
             return list.GetEnumerator();
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            PropertyChangedEventHandler? propertyChanged = this.PropertyChanged;
+            if (propertyChanged == null)
+            {
+                return;
+            }
+            propertyChanged((object)this, e);
         }
 
         private void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
