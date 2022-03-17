@@ -1,14 +1,17 @@
 ﻿using OneStreamWebUI.Mvvm.Toolkit;
+using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace OneStreamWebMvvm
 {
-    public class OrderModel : ViewModelBase
+    public class OrderModel : ModelBase
     {
         private int orderID;
         private DateTime orderDate;
         private string? customerID;
         private string? customerName;
-        
+
         public int OrderID => orderID;
         public DateTime OrderDate => orderDate;
 

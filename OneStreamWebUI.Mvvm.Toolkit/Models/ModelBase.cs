@@ -6,35 +6,61 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 {
     public abstract class ModelBase : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        protected bool IsBatchUpdate = false;
 
-        public bool SetProperty<TModel, TItem>(ref TItem field, TItem value, TModel model, Action<TModel, string, TItem> callback, [CallerMemberName] string? propertyName = null) where TModel : class
-        {
-            if (!EqualityComparer<TItem>.Default.Equals(field, value))
-            {
-                field = value;
-                callback?.Invoke(model, propertyName, value);
-                this.OnPropertyChanged(propertyName);
-                return true;
-            }
-
-            return false;
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public bool SetProperty<TItem>(ref TItem field, TItem value, [CallerMemberName] string? propertyName = null)
         {
             if (!EqualityComparer<TItem>.Default.Equals(field, value))
             {
-                this.OnPropertyChanged(propertyName);
+                field = value;
+                if (!IsBatchUpdate)
+                {
+                    OnPropertyChanged(propertyName!);
+                }
                 return true;
             }
-
             return false;
         }
 
-        public virtual void OnPropertyChanged(string propertyName)
+        public bool SetProperty<TItem>(TItem oldValue, TItem newValue, Action<TItem, TItem> callback, [CallerMemberName] string? propertyName = null)
+        {
+            if (!EqualityComparer<TItem>.Default.Equals(oldValue, newValue))
+            {
+                callback(oldValue, newValue);
+                if (!IsBatchUpdate)
+                {
+                    this.OnPropertyChanged(propertyName!);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if (propertyChanged == null)
+            {
+                return;
+            }
+            propertyChanged((object)this, e);
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void BeginUpdate()
+        {
+            this.IsBatchUpdate = true;
+        }
+
+        public void EndUpdate()
+        {
+            this.IsBatchUpdate = false;
         }
     }
 }

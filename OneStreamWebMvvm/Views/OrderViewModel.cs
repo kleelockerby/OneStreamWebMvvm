@@ -6,24 +6,24 @@ namespace OneStreamWebMvvm
 {
     public class OrderViewModel : ViewModelBase
     {
-        public Order Model { get; set; }
-        
+        public OrderModel Model { get; set; }
+
         public int OrderID => Model.OrderID;
         public DateTime OrderDate => Model.OrderDate;
 
         public string? CustomerID
         {
-            get => Model.CustomerID;
-            set { SetProperty(value, ((customerID) => Model.CustomerID = customerID!), nameof(CustomerID)); }
+            get => Model.CustomerName;
+            set { SetProperty(value, ((customerName) => Model.CustomerName = customerName!), nameof(CustomerName)); }
         }
 
         public string? CustomerName
         {
             get => Model.CustomerName;
-            set { SetProperty(value, ((customerName) => Model.CustomerName = customerName!), nameof(CustomerName));}           
+            set { SetProperty(value, ((customerName) => Model.CustomerName = customerName!), nameof(CustomerName)); }
         }
 
-        public OrderViewModel(Order orderModel)
+        public OrderViewModel(OrderModel orderModel)
         {
             this.Model = orderModel;
         }

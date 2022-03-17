@@ -4,7 +4,7 @@ using OneStreamWebUI.Mvvm.Toolkit;
 
 namespace OneStreamWebMvvm
 {
-    public class Order : ModelBase
+    public class Order
     {
         public int OrderID { get; set; }
         public DateTime OrderDate { get; set; }
