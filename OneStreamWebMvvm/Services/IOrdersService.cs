@@ -3,6 +3,7 @@ namespace OneStreamWebMvvm
 {
     public interface IOrdersService
     {
-        Task<IEnumerable<OrderModel>>? GetOrders();
+        Task<IEnumerable<Order>>? GetOrders();
+        Task<IEnumerable<OrderModel>>? GetOrderModels();
     }
 }

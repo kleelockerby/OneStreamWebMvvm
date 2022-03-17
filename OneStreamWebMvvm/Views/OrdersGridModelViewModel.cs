@@ -8,6 +8,7 @@ namespace OneStreamWebMvvm
         private readonly IOrdersService ordersService;
 
         public OrderModel? SelectedModelOrder;
+        
         private ViewModelCollection<OrderModel> viewOrders;
         public ViewModelCollection<OrderModel> ViewOrders
         {
@@ -25,7 +26,7 @@ namespace OneStreamWebMvvm
 
         protected override async Task OnInitializedAsync()
         {
-            IEnumerable<OrderModel> orderModels = await ordersService?.GetOrders()!;
+            IEnumerable<OrderModel> orderModels = await ordersService?.GetOrderModels()!;
             this.viewOrders = new ViewModelCollection<OrderModel>(orderModels);
         }
 
@@ -47,10 +48,10 @@ namespace OneStreamWebMvvm
 
         public void UpdateRecord()
         {
-            this.SelectedModelOrder = this.ViewOrders[2];
-            OrderModel orderModel = this.SelectedModelOrder;
+            OrderModel orderModel = this.ViewOrders[2];
             orderModel.CustomerID = "BNESEN";
             orderModel.CustomerName = "Bon Nese app";
+            this.SelectedModelOrder = this.ViewOrders[2];
         }
     }
 }

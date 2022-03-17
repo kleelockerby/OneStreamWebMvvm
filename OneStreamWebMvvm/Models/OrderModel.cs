@@ -1,23 +1,33 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using OneStreamWebUI.Mvvm.Toolkit;
+﻿using OneStreamWebUI.Mvvm.Toolkit;
 
 namespace OneStreamWebMvvm
 {
-    public class OrderModel : ModelBase
+    public class OrderModel : ViewModelBase
     {
-        public int OrderID { get; set; }
-        public DateTime OrderDate { get; set; }
+        private int orderID;
+        private DateTime orderDate;
+        private string? customerID;
+        private string? customerName;
         
-        public string? CustomerID { get; set; }
-        public string? CustomerName { get; set; }
+        public int OrderID => orderID;
+        public DateTime OrderDate => orderDate;
 
-        public OrderModel() { }
+        public string? CustomerID
+        {
+            get => customerID;
+            set { SetProperty(ref customerID, value, nameof(CustomerID)); }
+        }
+
+        public string? CustomerName
+        {
+            get => customerName;
+            set { SetProperty(ref customerName, value, nameof(CustomerName)); }
+        }
 
         public OrderModel(int orderID, DateTime orderDate, string customerID, string customerName)
         {
-            this.OrderID = orderID;
-            this.OrderDate = orderDate;
+            this.orderID = orderID;
+            this.orderDate = orderDate;
             this.CustomerID = customerID;
             this.CustomerName = customerName;
         }

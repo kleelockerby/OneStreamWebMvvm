@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public class ViewModelCollection<TItem> : IList<TItem>, INotifyCollectionChanged where TItem : class
+    public class ViewModelCollection<TItem> : IList<TItem>, INotifyPropertyChanged, INotifyCollectionChanged where TItem : class
     {
         private List<TItem> list = new List<TItem>();
         public List<TItem> List { get => list; set => list = value; }

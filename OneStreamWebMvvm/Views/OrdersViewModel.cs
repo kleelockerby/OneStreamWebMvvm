@@ -17,7 +17,7 @@ namespace OneStreamWebMvvm
 
         protected override async Task OnInitializedAsync()
         {
-            IEnumerable<OrderModel> orders = await ordersService?.GetOrders()!;
+            IEnumerable<Order> orders = await ordersService?.GetOrders()!;
             IEnumerable<OrderViewModel> orderViewModels = orders.Select(x => new OrderViewModel(x));
             InitializeList(orderViewModels);
         }
@@ -32,7 +32,7 @@ namespace OneStreamWebMvvm
 
         public void AddOrder()
         {
-            OrderModel newOrderModel = new OrderModel(10011, new DateTime(2017, 05, 15), "FREDB", "Fred's Bicycles");
+            Order newOrderModel = new Order(10011, new DateTime(2017, 05, 15), "FREDB", "Fred's Bicycles");
             OrderViewModel newOrderViewModel = new OrderViewModel(newOrderModel);
             this.Add(newOrderViewModel);
             this.SelectedViewModelOrder = newOrderViewModel;
