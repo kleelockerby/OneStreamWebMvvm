@@ -34,26 +34,36 @@ namespace OneStreamWebMvvm
 
         public CounterCommandViewModel()
         {
-            this.UpdateCommand = new RelayCommand(IncrementCount, this.IsActive, CanIncrementChanged);
+            this.UpdateCommand = new RelayCommand(IncrementCount, CanIncrementCount, CanIncrementChanged);
         }
 
         public void IncrementCount()
         {
-            if (this.currentCount < this.maxCount)
-            {
+            if (UpdateCommand.CanExecute())
                 currentCount++;
+            else
+            {
+                UpdateCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool CanIncrementCount()
+        {
+            if(this.currentCount < this.maxCount)
+            {
+                this.IsActive = true;
             }
             else
             {
-                UpdateCommand.CanExecute = false;
+                this.IsActive = false;
             }
-        }
-       
-        public void CanIncrementChanged()
-        {
-            this.IsActive = !this.IsActive;
+            return this.IsActive;
         }
 
+        public void CanIncrementChanged()
+        {
+            this.IsActive = false;
+        }
     }
 }
 
