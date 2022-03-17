@@ -10,7 +10,8 @@ namespace OneStreamWebMvvm
 {
     public class WeatherForecastViewModel : ViewModelBase
     {
-        //private WeatherForecastModel model;
+        private WeatherForecastModel weatherForecastModel;
+
         private DateTime date;
         private int temperatureC;
         private int? temperatureF;
@@ -35,44 +36,16 @@ namespace OneStreamWebMvvm
 
         public WeatherForecastViewModel(WeatherForecastModel weatherForecastModel)
         {
-            //this.model = weatherForecastModel;
-            this.date = weatherForecastModel.Date;
-            TemperatureC = weatherForecastModel.TemperatureC;
-            this.summary = weatherForecastModel.Summary;
-
-            //weatherForecastModel.ModelChanged = UpdateItem;
-        }
-
-        public void Add(DateTime date, int tempC, string? summary)
-        {
-            //WeatherForecastModel model = new WeatherForecastModel(date, tempC, summary);
-            this.date = date;
-            this.TemperatureC = tempC;
-            this.summary = summary;
+            this.weatherForecastModel = weatherForecastModel;
+            this.date = this.weatherForecastModel.Date;
+            TemperatureC = this.weatherForecastModel.TemperatureC;
+            this.summary = this.weatherForecastModel.Summary;
         }
 
         private void TempValueChanged(int tempC)
         {
-            temperatureC = tempC;
             temperatureF = (int)(tempC/0.5556) + 32;
+            weatherForecastModel.TemperatureC = tempC;
         }
-
-
-
-
-        /*public void UpdateItem(object objForecast, bool isBatchUpdate)
-        {
-            WeatherForecastModel? forecast = objForecast as WeatherForecastModel;
-            if (isBatchUpdate)
-            {
-                this.temperatureC = forecast?.TemperatureC;
-                this.temperatureF = forecast?.TemperatureF;
-            }
-            else
-            {
-                this.TemperatureC = forecast?.TemperatureC;
-                this.TemperatureF = forecast?.TemperatureF;
-            }
-        }*/
     }
 }

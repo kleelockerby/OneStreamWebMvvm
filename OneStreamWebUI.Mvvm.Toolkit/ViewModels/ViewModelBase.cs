@@ -18,9 +18,8 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-
-        public virtual void OnInitialized() { }
-        public virtual Task OnInitializedAsync()
+        protected internal virtual void OnInitialized() { }
+        protected internal virtual Task OnInitializedAsync()
         {
             return Task.CompletedTask;
         }
@@ -43,7 +42,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         {
             if (!EqualityComparer<TItem>.Default.Equals(field, value))
             {
-                //field = value;
+                field = value;
                 callback(value);
                 if (!IsBatchUpdate)
                 {
@@ -54,17 +53,33 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             return false;
         }
 
-        protected bool SetProperty<TModel, TItem>(ref TItem field, TItem value, TModel model, Action<TModel, TItem> callback, [CallerMemberName] string? propertyName = null) where TModel : class
+        protected void SetProperty<TItem>(TItem value, [CallerMemberName] string? propertyName = null)
+        {
+            if (!IsBatchUpdate)
+            {
+                this.OnPropertyChanged(propertyName!);
+            }
+        }
+
+        protected void SetProperty<TItem>(TItem value, Action<TItem> callback, [CallerMemberName] string? propertyName = null)
+        {
+            callback?.Invoke(value);
+            if (!IsBatchUpdate)
+            {
+                this.OnPropertyChanged(propertyName!);
+            }
+        }
+
+        public bool SetProperty<TModel, TItem>(TItem field, TItem value, TModel model, Action<TModel, TItem> callback, [CallerMemberName] string? propertyName = null) where TModel : class
         {
             if (!EqualityComparer<TItem>.Default.Equals(field, value))
             {
+                field = value;
                 callback(model, value);
-                if (!IsBatchUpdate)
-                {
-                    this.OnPropertyChanged(propertyName!);
-                }
+                this.OnPropertyChanged(propertyName);
                 return true;
             }
+
             return false;
         }
 
@@ -78,36 +93,36 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             propertyChanged((object)this, e);
         }
 
-        public virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual void OnParametersSet() { }
+        protected internal virtual void OnParametersSet() { }
 
-        public virtual Task OnParametersSetAsync()
+        protected internal virtual Task OnParametersSetAsync()
         {
             return Task.CompletedTask;
         }
 
-        protected void StateHasChanged()
+        protected internal void StateHasChanged()
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
 
-        public virtual bool ShouldRender()
+        protected internal virtual bool ShouldRender()
         {
             return true;
         }
 
-        public virtual void OnAfterRender(bool firstRender) { }
+        protected internal virtual void OnAfterRender(bool firstRender) { }
 
-        public virtual Task OnAfterRenderAsync(bool firstRender)
+        protected internal virtual Task OnAfterRenderAsync(bool firstRender)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task SetParametersAsync(ParameterView parameters)
+        protected internal virtual Task SetParametersAsync(ParameterView parameters)
         {
             return Task.CompletedTask;
         }

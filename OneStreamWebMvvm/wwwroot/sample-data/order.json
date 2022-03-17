@@ -1,72 +1,62 @@
 [
 	{
-		"OrderID" : 10001,
-		"OrderDate" : "2018-06-06",
-		"Freight": 2.32,
-		"CustomerID": "ALFKI",
-		"CustomerName": "Alfreds Futterkiste"
+		"orderID": 10001,
+		"orderDate": "2018-05-06",
+		"customerID": "ALFKI",
+		"customerName": "Alfreds Futterkiste"
 	},
 	{
-		"OrderID" : 10002,
-		"OrderDate" : "2018-04-16",
-		"Freight": 4.32,
-		"CustomerID": "AROUT",
-		"CustomerName":"Around the Horn"
+		"orderID": 10002,
+		"orderDate": "2018-05-07",
+		"customerID": "AROUT",
+		"customerName": "Around the Horn"
 	},
 	{
-		"OrderID" : 10003,
-		"OrderDate" : "2019-02-02",
-		"Freight": 6.25,
-		"CustomerID": "BONAP",
-		"CustomerName":"Bon app"
+		"orderID": 10003,
+		"orderDate": "2018-05-08",
+		"customerID": "BONAP",
+		"customerName": "Bon app"
 	},
 	{
-		"OrderID" : 10004,
-		"OrderDate" : "2017-11-16",
-		"Freight": 5.26,
-		"CustomerID": "CHOPS",
-		"CustomerName":"Chop-Suey Chinese"
+		"orderID": 10004,
+		"orderDate": "2018-05-09",
+		"customerID": "CHOPS",
+		"customerName": "Chop-Suey Chinese"
 	},
 	{
-		"OrderID" : 10005,
-		"OrderDate" : "2018-09-04",
-		"Freight": 4.21,
-		"CustomerID": "GREAL",
-		"CustomerName":"Great Lakes Food Market"
+		"orderID": 10005,
+		"orderDate": "2018-05-10",
+		"customerID": "GREAL",
+		"customerName": "Great Lakes Food Market"
 	},
 	{
-		"OrderID" : 10006,
-		"OrderDate" : "2019-025-16",
-		"Freight": 4.01,
-		"CustomerID": "HANAR",
-		"CustomerName": "Hanari Carnes"
+		"orderID": 10006,
+		"orderDate": "2018-07-13",
+		"customerID": "EASTC",
+		"customerName": "Eastern Connection"
 	},
 	{
-		"OrderID" : 10007,
-		"OrderDate" : "2017-07-26",
-		"Freight": 7.21,
-		"CustomerID": "LONEP",
-		"CustomerName":"Lonesome Pine Restaurant"
+		"orderID": 10007,
+		"orderDate": "2016-01-22",
+		"customerID": "SEVES",
+		"customerName": "Seven Seas Imports"
 	},
 	{
-		"OrderID" : 10008,
-		"OrderDate" : "2019-08-25",
-		"Freight": 5.32,
-		"CustomerID": "MAISD",
-		"CustomerName":"Maison Dewey"
+		"orderID": 10008,
+		"orderDate": "2019-05-10",
+		"customerID": "NORTS",
+		"customerName": "North South"
 	},
 	{
-		"OrderID" : 10009,
-		"OrderDate" : "2017-03-11",
-		"Freight": 8.32,
-		"CustomerID": "OLDWO",
-		"CustomerName":"Old World Delicatessen"
+		"orderID": 10009,
+		"orderDate": "2018-12-12",
+		"customerID": "OTTIK",
+		"customerName": "Ottilies Kaseladen"
 	},
 	{
-		"OrderID" : 10010,
-		"OrderDate" : "2017-10-13",
-		"Freight": 6.11,
-		"CustomerID": "Quick",
-		"CustomerName":"QUICK-Stop"
+		"orderID": 10010,
+		"orderDate": "2017-04-20",
+		"customerID": "PARIS",
+		"customerName": "Paris Specialties"
 	}
 ]

@@ -1,43 +1,30 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Threading.Tasks;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public class ViewModelCollectionBase<TViewModel> : IList<TViewModel>, INotifyCollectionChanged, INotifyPropertyChanged where TViewModel : class
+    public class ViewModelCollectionBase<TViewModel> : ViewModelBase, IList<TViewModel>, INotifyCollectionChanged where TViewModel : class
     {
         private List<TViewModel> list = new List<TViewModel>();
+
+        public List<TViewModel> List { get => list; set => list = value; }
 
         public int Count => list.Count;
         public bool IsReadOnly => false;
 
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         public ViewModelCollectionBase() { }
-        public ViewModelCollectionBase(List<TViewModel> viewModel)
-        {
-            this.list = viewModel;
-        }
-
         public ViewModelCollectionBase(IEnumerable<TViewModel> viewModel)
         {
             this.list = viewModel.ToList();
         }
 
-        public void InitializeViewModel(List<TViewModel> viewModel)
+        public void InitializeList(IEnumerable<TViewModel> viewModel)
         {
-            this.list = viewModel;
-        }
-
-        public virtual void OnInitialized() { }
-        public virtual Task OnInitializedAsync()
-        {
-            return Task.CompletedTask;
+            this.list = viewModel.ToList();
         }
 
         public TViewModel this[int index]
@@ -139,8 +126,8 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         }
 
         private void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
-        { 
-            CollectionChanged?.Invoke(this, args); 
+        {
+            CollectionChanged?.Invoke(this, args);
         }
 
         private void OnCollectionReset() => this.OnCollectionChanged(CollectionPropertyEvents.ResetCollectionChanged);
@@ -148,15 +135,5 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         private void OnCountPropertyChanged() => this.OnPropertyChanged(CollectionPropertyEvents.CountPropertyChanged);
 
         private void OnIndexerPropertyChanged() => this.OnPropertyChanged(CollectionPropertyEvents.IndexerPropertyChanged);
-
-        private void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if (propertyChanged == null)
-            {
-                return;
-            }
-            propertyChanged((object)this, e);
-        }
     }
 }

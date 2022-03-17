@@ -1,6 +1,6 @@
 ﻿#nullable enable
 using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public class ComponentViewBase : ComponentBase
+    public class ComponentViewBase : ComponentBase, IDisposable, IAsyncDisposable
     {
         private IBindingFactory bindingFactory = null!;
         private HashSet<IBinding> bindings = new();
@@ -100,5 +100,58 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             }
             return null!;
         }
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (bindings is not null)
+                {
+                    DisposeBindings();
+                    bindings = null!;
+                }
+            }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await DisposeAsyncCore();
+            Dispose(false);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual ValueTask DisposeAsyncCore()
+        {
+            if (bindings is not null)
+            {
+                DisposeBindings();
+                bindings = null!;
+            }
+            return default;
+        }
+
+        private void DisposeBindings()
+        {
+            foreach (var binding in bindings)
+            {
+                weakEventManager.RemoveWeakEventListener(binding);
+                binding.Dispose();
+            }
+        }
+
+        ~ComponentViewBase()
+        {
+            Dispose(false);
+        }
+
+        #endregion
     }
 }

@@ -1,27 +1,26 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public abstract class ModelBase
+    public abstract class ModelBase : INotifyPropertyChanged
     {
-        protected bool IsBatchUpdate;
-
         public event PropertyChangedEventHandler? PropertyChanged;
-        public Action<object, bool>? ModelChanged;
 
-        public void BeginUpdate()
+
+        public bool SetProperty<TModel, TItem>(ref TItem field, TItem value, TModel model, Action<TModel, string, TItem> callback, [CallerMemberName] string? propertyName = null) where TModel : class
         {
-            this.IsBatchUpdate = true;
+            if (!EqualityComparer<TItem>.Default.Equals(field, value))
+            {
+                field = value;
+                callback?.Invoke(model, propertyName, value);
+                this.OnPropertyChanged(propertyName);
+                return true;
+            }
+
+            return false;
         }
-
-        public void EndUpdate()
-        {
-            this.IsBatchUpdate = false;
-        }
-
-        public abstract void UpdateModel(object model);
-
         public virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -31,15 +31,14 @@ namespace OneStreamWebMvvm
             this.weatherForecastService = weatherForecastService;
         }
 
-        public override async Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            // Simulate loading time
             await Task.Delay(1500);
 
             IEnumerable<WeatherForecastModel> forecasts = await weatherForecastService?.GetForecasts()!;
             IEnumerable<WeatherForecastViewModel> weatherForecastViewModels = forecasts.Select(x => new WeatherForecastViewModel(x));
-            this.forecasts = new ViewModelCollectionBase<WeatherForecastViewModel>(weatherForecastViewModels);
-            //this.forecasts.CollectionChanged
+            this.forecasts = new ViewModelCollectionBase<WeatherForecastViewModel>(weatherForecastViewModels);      //Use this.Forecasts if you want StateHasChanged to run
+            this.Forecasts.CollectionChanged += OnForecastsChanged;
         }
 
         public void AddForecast()
@@ -65,27 +64,5 @@ namespace OneStreamWebMvvm
         {
             this.ActionType = args.Action.ToString();
         }
-
-        /*
-        public void RandomizeData()
-        {
-            var random = new Random();
-            int i = 10;
-
-            foreach (WeatherForecastViewModel weatherForecastViewModel in Forecasts!)
-            {
-                int temperatureC = random.Next((10 + i/3), 40 + i++);
-                weatherForecastViewModel.Update()
-
-                WeatherForecastModel model = weatherForecastViewModel.WeatherForecast;
-                model.BeginUpdate();
-                model.Date = weatherForecastViewModel.Date;
-                model.TemperatureC = random.Next((10 + i/3), 40 + i++);
-                model.Summary = weatherForecastViewModel.Summary;
-                model.UpdateModel(model);
-            }
-
-            this.InformationSource = "Channel 3 News";
-        }*/
     }
 }

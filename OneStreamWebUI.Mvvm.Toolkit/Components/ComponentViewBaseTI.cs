@@ -1,16 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Specialized;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Components;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public abstract class ComponentViewBase<TViewModel> : ComponentViewBase where TViewModel : ViewModelBase
+    public class ComponentViewBase<TViewModel, TItem> : ComponentViewBase where TViewModel : ViewModelCollectionBase<TItem> where TItem : class
     {
         private IViewModelParameterSetter? viewModelParameterSetter;
 
@@ -20,6 +19,20 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         internal ComponentViewBase(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             SetBindingContext();
+        }
+
+        public TValue Bind<TValue>(Expression<Func<TViewModel, TValue>> property)
+        {
+            if (BindingContext is null)
+            {
+                throw new InvalidOperationException($"{nameof(BindingContext)} is not set");
+            }
+            return AddBinding(BindingContext, property);
+        }
+
+        private void SetBindingContext()
+        {
+            BindingContext ??= ServiceProvider?.GetRequiredService<TViewModel>();
         }
 
         protected override void OnInitialized()
@@ -33,22 +46,6 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         {
             await base.OnInitializedAsync();
             await BindingContext!.OnInitializedAsync();
-        }
-        #nullable disable
-        private void SetBindingContext()
-        {
-            BindingContext ??= ServiceProvider?.GetRequiredService<TViewModel>();
-            BindingContext.ServiceProvider = ServiceProvider;
-        }
-        #nullable enable
-
-        public TValue Bind<TValue>(Expression<Func<TViewModel, TValue>> property)
-        {
-            if (BindingContext is null)
-            {
-                throw new InvalidOperationException($"{nameof(BindingContext)} is not set");
-            }
-            return AddBinding(BindingContext, property);
         }
 
         protected override void OnParametersSet()

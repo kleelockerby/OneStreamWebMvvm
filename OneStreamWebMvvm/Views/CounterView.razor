@@ -1,6 +1,6 @@
 ﻿@page "/counterview"
 @inherits ComponentViewBase<CounterViewModel>
-@inject ClockViewModel clockViewModel
+@*@inject ClockViewModel clockViewModel*@
 @namespace OneStreamWebMvvm
 
 <h1>Counter</h1>
@@ -12,13 +12,11 @@
 
 <p style="margin-top: 20px;">Current count: @Bind(x => x.CurrentCount)</p>
 
-<button class="btn btn-primary" @onclick="@BindingContext.IncrementCount">Click me</button>
+<button class="btn btn-primary" disabled="@(BindingContext.IsActive == false)" @onclick="@BindingContext.IncrementCount">Increment</button>&nbsp;&nbsp;
+<button class="btn btn-primary" disabled="@(BindingContext.IsActive == true)" @onclick="@BindingContext.Reset">Reset</button>
 
-<div style="margin: 20px 0; padding: 10px; background-color: #F0F0F0; font-size: .85rem;">
-	You can also bind additional view models that you simply inject by yourself.
-    The lifecycle methods on such view models will not be invoked by this component.
-</div>
 
-<div style="padding: 10px; background-color: #F0F0F0; font-size: .85rem;">
-	Current time: @Bind(clockViewModel, x => x.DateTime)
-</div>
+
+<style>
+    .btn-primary.disabled, .btn-primary:disabled { opacity: .25; } 
+</style>

@@ -1,0 +1,58 @@
+﻿@page "/ordersview"
+@inherits ComponentViewBase<OrdersViewModel, OrderViewModel>
+@namespace OneStreamWebMvvm.Views
+@using OneStreamWebUI.Mvvm.Toolkit
+
+<div style="margin-top: 25px;">
+	<div><h3 style="color: #000;">Orders</h3></div>
+</div>
+
+@if (Bind(x => x.ViewModelOrders) == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<div style="margin: 20px 0;"><span>Orders Count: </span>&nbsp; @this.BindingContext.Count</div>
+	<div style="margin: 20px 0;"><span>Selected Order: @this.BindingContext?.SelectedViewModelOrder?.CustomerName</span>&nbsp; </div>
+	<div style="margin: 20px 0;"><span>Order Index: @this.BindingContext?.ViewModelOrders.IndexOf(this.BindingContext?.SelectedViewModelOrder!)</span>&nbsp; </div>
+
+	<div class="col-lg-12 control-section">
+		<div class="content-wrapper">
+			<div class="row">
+				<div class="col-lg-2"><button class="btn btn-primary" @onclick="@BindingContext.AddOrder">Add Order</button></div>
+				<div class="col-lg-2"><button class="btn btn-primary" @onclick="@BindingContext.UpdateOrder">Update Order 2</button> &nbsp; &nbsp;</div>
+				<div class="col-lg-2"><button class="btn btn-primary" @onclick="@BindingContext.DeleteOrder">Delete Order 5</button></div>
+			</div>
+			<div class="row" style="margin-top: 15px;">
+				<table class="table table-striped">
+					<thead>
+						<tr>							<th>Order ID</th>
+							<th>Order Date</th>
+							<th>Customer ID</th>
+							<th>Customer Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var viewModelOrder in Bind(x => x.ViewModelOrders)!)
+						{
+							<tr class="tableMvvm" @onclick="@( () => @BindingContext.OnRowClick(viewModelOrder))">
+								<td>@viewModelOrder.OrderID</td>
+								<td>@viewModelOrder.OrderDate.ToShortDateString()</td>
+								<td>@viewModelOrder.CustomerID</td>
+								<td>@viewModelOrder.CustomerName</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+}
+
+
+<style>
+
+	.tableMvvm:hover { cursor: pointer; background-color: #D0D0D0; }
+
+</style>

@@ -2,7 +2,7 @@
 
 namespace OneStreamWebMvvm
 {
-    public class WeatherForecastModel : ModelBase
+    public class WeatherForecastModel
     {
         public DateTime Date { get; set; }
         public int TemperatureC { get; set; }
@@ -12,16 +12,9 @@ namespace OneStreamWebMvvm
         public WeatherForecastModel() { }
         public WeatherForecastModel(DateTime dateTime, int temperatureC, string? summary)
         {
-            this.Date = Date;
+            this.Date = dateTime;
             this.TemperatureC = temperatureC;
             this.Summary = summary;
-        }
-
-        public override void UpdateModel(object model)
-        {
-            this.TemperatureC = ((WeatherForecastModel)model).TemperatureC;
-            this.Summary = ((WeatherForecastModel)model).Summary;
-            ModelChanged?.Invoke(this, IsBatchUpdate);
         }
     }
 }
