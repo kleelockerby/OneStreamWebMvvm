@@ -17,21 +17,22 @@
 }
 else
 {
-	<div style="margin: 20px 0;"><span>Orders Count: </span>&nbsp; @this.BindingContext.Count</div>
-	<div style="margin: 20px 0;"><span>Selected Order: @this.BindingContext?.SelectedViewModelOrder?.CustomerName</span>&nbsp; </div>
-	<div style="margin: 20px 0;"><span>Order Index: @this.BindingContext?.ViewModelOrders.IndexOf(this.BindingContext?.SelectedViewModelOrder!)</span>&nbsp; </div>
+	<div style="margin: 20px 0;"><span>Orders Count: </span>&nbsp; @this.DataContext.Count</div>
+	<div style="margin: 20px 0;"><span>Selected Order: @this.DataContext?.SelectedViewModelOrder?.CustomerName</span>&nbsp; </div>
+	<div style="margin: 20px 0;"><span>Order Index: @this.DataContext?.ViewModelOrders.IndexOf(this.DataContext?.SelectedViewModelOrder!)</span>&nbsp; </div>
 
 	<div class="col-lg-12 control-section">
 		<div class="content-wrapper">
 			<div class="row">
-				<div class="col-lg-2"><button class="btn btn-primary" @onclick="@BindingContext.AddOrder">Add Order</button></div>
-				<div class="col-lg-2"><button class="btn btn-primary" @onclick="@BindingContext.UpdateOrder">Update Order 2</button> &nbsp; &nbsp;</div>
-				<div class="col-lg-2"><button class="btn btn-primary" @onclick="@BindingContext.DeleteOrder">Delete Order 5</button></div>
+				<div class="col-lg-2"><button class="btn btn-primary" @onclick="@DataContext.AddOrder">Add Order</button></div>
+				<div class="col-lg-2"><button class="btn btn-primary" @onclick="@DataContext.UpdateOrder">Update Order 2</button> &nbsp; &nbsp;</div>
+				<div class="col-lg-2"><button class="btn btn-primary" @onclick="@DataContext.DeleteOrder">Delete Order 5</button></div>
 			</div>
 			<div class="row" style="margin-top: 15px;">
 				<table class="table table-striped">
 					<thead>
-						<tr>							<th>Order ID</th>
+						<tr>
+							<th>Order ID</th>
 							<th>Order Date</th>
 							<th>Customer ID</th>
 							<th>Customer Name</th>
@@ -40,7 +41,7 @@ else
 					<tbody>
 						@foreach (var viewModelOrder in Bind(x => x.ViewModelOrders)!)
 						{
-							<tr class="tableMvvm" @onclick="@( () => @BindingContext.OnRowClick(viewModelOrder))">
+							<tr class="tableMvvm" @onclick="@( () => @DataContext.OnRowClick(viewModelOrder))">
 								<td>@viewModelOrder.OrderID</td>
 								<td>@viewModelOrder.OrderDate.ToShortDateString()</td>
 								<td>@viewModelOrder.CustomerID</td>

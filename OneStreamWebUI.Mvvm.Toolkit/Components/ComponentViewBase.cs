@@ -45,7 +45,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         public virtual TValue AddBinding<TViewModel, TValue>(TViewModel viewModel, Expression<Func<TViewModel, TValue>> propertyExpression) where TViewModel : ViewModelBase
         {
-            PropertyInfo? propertyInfo = ResolveBindingContext(viewModel, propertyExpression);
+            PropertyInfo? propertyInfo = ResolveDataContext(viewModel, propertyExpression);
 
             IBinding? binding = bindingFactory.Create(viewModel, propertyInfo, weakEventManager);
             if (bindings.Contains(binding))
@@ -66,7 +66,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             InvokeAsync(StateHasChanged);
         }
 
-        protected static PropertyInfo ResolveBindingContext<TViewModel, TValue>(TViewModel viewModel, Expression<Func<TViewModel, TValue>> property)
+        protected static PropertyInfo ResolveDataContext<TViewModel, TValue>(TViewModel viewModel, Expression<Func<TViewModel, TValue>> property)
         {
             string propertyName = string.Empty;
             try

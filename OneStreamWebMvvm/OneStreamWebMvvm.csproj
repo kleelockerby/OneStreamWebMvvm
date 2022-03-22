@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Components\ButtonCommand\" />
+    <Folder Include="Components\Messages\" />
   </ItemGroup>
 
 </Project>

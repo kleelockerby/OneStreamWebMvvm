@@ -142,7 +142,7 @@ namespace OneStreamWebMvvm
 
 	    protected void OnClick()
 	    {
-		    if (BindingContext.CanIncrement)
+		    if (DataContext.CanIncrement)
 		    {
 				UpdateCommand.Execute();
 				StateHasChanged();

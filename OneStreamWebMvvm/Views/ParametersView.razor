@@ -20,9 +20,9 @@
 
 <p style="margin-top: 20px;">My Name is @Bind(x => x.ParamName)</p>
 
-<EditForm Model="BindingContext">
-    <InputText @bind-Value="@BindingContext.NewName" />
-    <div style="margin-top: 20px;"><button class="btn btn-primary" @onclick="@BindingContext.NavigateToNewName">Navigate</button></div>
+<EditForm Model="DataContext">
+    <InputText @bind-Value="@DataContext.NewName" />
+    <div style="margin-top: 20px;"><button class="btn btn-primary" @onclick="@DataContext.NavigateToNewName">Navigate</button></div>
 </EditForm>
 
 

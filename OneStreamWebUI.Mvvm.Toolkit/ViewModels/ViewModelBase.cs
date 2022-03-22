@@ -18,12 +18,6 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected internal virtual void OnInitialized() { }
-        protected internal virtual Task OnInitializedAsync()
-        {
-            return Task.CompletedTask;
-        }
-
         public bool SetProperty<TItem>(ref TItem field, TItem value, [CallerMemberName] string? propertyName = null)
         {
             if (!EqualityComparer<TItem>.Default.Equals(field, value))
@@ -96,6 +90,13 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected internal virtual void OnInitialized() { }
+        
+        protected internal virtual Task OnInitializedAsync()
+        {
+            return Task.CompletedTask;
         }
 
         protected internal virtual void OnParametersSet() { }

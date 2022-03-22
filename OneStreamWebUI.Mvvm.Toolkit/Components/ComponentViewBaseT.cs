@@ -14,90 +14,92 @@ namespace OneStreamWebUI.Mvvm.Toolkit
     {
         private IViewModelParameterSetter? viewModelParameterSetter;
 
-        protected internal TViewModel BindingContext { get; set; } = null!;
+        protected internal TViewModel DataContext { get; set; } = null!;
 
         public ComponentViewBase() { }
         internal ComponentViewBase(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            SetBindingContext();
+            SetDataContext();
         }
 
-        protected override void OnInitialized()
-        {
-            SetBindingContext();
-            base.OnInitialized();
-            BindingContext?.OnInitialized();
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
-            await BindingContext!.OnInitializedAsync();
-        }
         #nullable disable
-        private void SetBindingContext()
+        private void SetDataContext()
         {
-            BindingContext ??= ServiceProvider?.GetRequiredService<TViewModel>();
-            BindingContext.ServiceProvider = ServiceProvider;
+            DataContext ??= ServiceProvider?.GetRequiredService<TViewModel>();
+            DataContext.ServiceProvider = ServiceProvider;
         }
         #nullable enable
 
         public TValue Bind<TValue>(Expression<Func<TViewModel, TValue>> property)
         {
-            if (BindingContext is null)
+            if (DataContext is null)
             {
-                throw new InvalidOperationException($"{nameof(BindingContext)} is not set");
+                throw new InvalidOperationException($"{nameof(DataContext)} is not set");
             }
-            return AddBinding(BindingContext, property);
+            return AddBinding(DataContext, property);
+        }
+
+        protected override void OnInitialized()
+        {
+            SetDataContext();
+            base.OnInitialized();
+            DataContext?.OnInitialized();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            await DataContext!.OnInitializedAsync();
         }
 
         protected override void OnParametersSet()
         {
             SetParameters();
             base.OnParametersSet();
-            BindingContext?.OnParametersSet();
+            DataContext?.OnParametersSet();
         }
 
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
-            await BindingContext.OnParametersSetAsync();
-        }
-
-        protected override bool ShouldRender()
-        {
-            return BindingContext?.ShouldRender() ?? true;
-        }
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            BindingContext?.OnAfterRender(firstRender);
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-            await BindingContext!.OnAfterRenderAsync(firstRender);
+            await DataContext.OnParametersSetAsync();
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             await base.SetParametersAsync(parameters);
 
-            if (BindingContext != null)
+            if (DataContext != null)
             {
-                await BindingContext.SetParametersAsync(parameters);
+                await DataContext.SetParametersAsync(parameters);
             }
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            DataContext?.OnAfterRender(firstRender);
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            await DataContext!.OnAfterRenderAsync(firstRender);
+        }
+
+        protected override bool ShouldRender()
+        {
+            return DataContext?.ShouldRender() ?? true;
         }
 
         private void SetParameters()
         {
-            if (BindingContext is null)
+            if (DataContext is null)
             {
-                throw new InvalidOperationException($"{nameof(BindingContext)} is not set");
+                throw new InvalidOperationException($"{nameof(DataContext)} is not set");
             }
             viewModelParameterSetter ??= ServiceProvider.GetRequiredService<IViewModelParameterSetter>();
-            viewModelParameterSetter.ResolveAndSet(this, BindingContext);
+            viewModelParameterSetter.ResolveAndSet(this, DataContext);
         }
+
     }
 }

@@ -6,14 +6,14 @@
 <h1>Counter Command</h1>
 
 <div style="margin: 20px 0; padding: 10px; background-color: #F0F0F0; font-size: .85rem;">
-	The view model gets auto injected and can be accessed with the property <pre style="display: inline">BindingContext</pre>
+	The view model gets auto injected and can be accessed with the property <pre style="display: inline">DataContext</pre>
 	You can use this property to bind event handlers on your controls.
 </div>
 
 <p style="margin-top: 20px;">Current count: @Bind(x => x.CurrentCount)</p>
 
-<button class="@BindingContext.ClassName" disabled="@(BindingContext.IsActive == false)" @onclick="BindingContext.IncrementCount">Increment Count</button>
-<button class="btn btn-primary" disabled="@(BindingContext.IsActive == true)" @onclick="@BindingContext.ResetCounter">Reset</button>
+<button class="@DataContext.ClassName" disabled="@(DataContext.IsActive == false)" @onclick="DataContext.IncrementCount">Increment Count</button>
+<button class="btn btn-primary" disabled="@(DataContext.IsActive == true)" @onclick="@DataContext.ResetCounter">Reset</button>
 
 
 <style>

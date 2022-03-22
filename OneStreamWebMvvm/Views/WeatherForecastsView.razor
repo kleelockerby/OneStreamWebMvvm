@@ -20,11 +20,11 @@
 }
 else
 {
-    <div style="margin-top: 10px;">Number of Forecasts = @BindingContext.Forecasts.Count</div>
-    <div style="margin-top: 10px;">ActionType = @BindingContext.ActionType</div>
+    <div style="margin-top: 10px;">Number of Forecasts = @DataContext.Forecasts.Count</div>
+    <div style="margin-top: 10px;">ActionType = @DataContext.ActionType</div>
 
-    <div style="margin-top: 10px;"><button class="btn btn-primary" @onclick="@BindingContext.RandomizeData">Randomize</button></div>
-    <div style="margin-top: 10px;"><button class="btn btn-primary" @onclick="@BindingContext.AddForecast">Add Forecast</button></div>
+    <div class="mr-2" style="margin-top: 10px; display: inline-block;"><button class="btn btn-primary" @onclick="@DataContext.RandomizeData">Randomize</button></div>
+    <div style="margin-top: 10px; display: inline-block;"><button class="btn btn-primary" @onclick="@DataContext.AddForecast">Add Forecast</button></div>
 
     <div style="margin-top: 20px;">
         <table class="table">
