@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OneStreamWebMvvm\OneStreamWebMvvm.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace OneStreamWebMvvm
 {
-    public class OrderModel : ModelBase
+    public class OrderModel
     {
         private int orderID;
         private DateTime orderDate;
@@ -18,13 +18,13 @@ namespace OneStreamWebMvvm
         public string? CustomerID
         {
             get => customerID;
-            set { SetProperty(ref customerID, value, nameof(CustomerID)); }
+            set { customerID = value; }
         }
 
         public string? CustomerName
         {
             get => customerName;
-            set { SetProperty(ref customerName, value, nameof(CustomerName)); }
+            set { customerName = value; }
         }
 
         public OrderModel(int orderID, DateTime orderDate, string customerID, string customerName)
