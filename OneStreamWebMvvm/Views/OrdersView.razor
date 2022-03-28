@@ -11,7 +11,7 @@
 	<div><h3 style="color: #000;">Orders</h3></div>
 </div>
 
-@*
+
 @if (Bind(x => x.ViewModelOrders) == null)
 {
 	<p><em>Loading...</em></p>
@@ -55,10 +55,11 @@ else
 		</div>
 	</div>
 }
-*@
+
 
 <style>
 
-	.tableMvvm:hover { cursor: pointer; background-color: #D0D0D0; }
+	.tableMvvm:hover{ 
+		cursor: pointer; background-color: #D0D0D0; }
 
 </style>

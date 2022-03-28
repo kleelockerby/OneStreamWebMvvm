@@ -3,19 +3,22 @@
 @*@inject ClockViewModel clockViewModel*@
 @namespace OneStreamWebMvvm
 
-<h1>Counter</h1>
+<h1>Counter Command</h1>
 
 <div style="margin: 20px 0; padding: 10px; background-color: #F0F0F0; font-size: .85rem;">
 	The view model gets auto injected and can be accessed with the property <pre style="display: inline">DataContext</pre>
-    You can use this property to bind event handlers on your controls.
+	You can use this property to bind event handlers on your controls.
 </div>
 
 <p style="margin-top: 20px;">Current count: @Bind(x => x.CurrentCount)</p>
 
-<button class="btn btn-primary" disabled="@(DataContext.IsActive == false)" @onclick="@DataContext.IncrementCount">Increment</button>&nbsp;&nbsp;
-<button class="btn btn-primary" disabled="@(DataContext.IsActive == true)" @onclick="@DataContext.Reset">Reset</button>
+<button class="@DataContext.ClassName" disabled="@(DataContext.UpdateCommand.CanExecute() == false)" @onclick="@DataContext.UpdateCommand.Execute">Increment Count</button>&nbsp;&nbsp;
+<button class="btn btn-primary" disabled="@(DataContext.ResetCommand.CanExecute() == false)" @onclick="@DataContext.ResetCounter">Reset</button>
 
 
+@*<div style="padding: 10px; background-color: #F0F0F0; font-size: .85rem;">
+	Current time: @Bind(ClockViewModel, x => x.DateTime)
+</div>*@
 
 <style>
     .btn-primary.disabled, .btn-primary:disabled { opacity: .25; } 

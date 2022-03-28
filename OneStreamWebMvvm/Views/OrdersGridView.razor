@@ -7,28 +7,5 @@
 @using Syncfusion.Blazor.Grids
 @using Syncfusion.Blazor.Buttons
 
-@if (Bind(x => x.ViewModelOrders) != null)
-{
-    <div style="margin: 20px 0;"><span>Orders Count: </span>&nbsp; @this.DataContext.ViewModelOrders.Count</div>
-	<div style="margin: 20px 0;"><span>Selected Order: @this.DataContext?.SelectedViewModelOrder?.CustomerName</span>&nbsp; </div>
-	<div style="margin: 20px 0;"><span>Order Index: @this.DataContext?.ViewModelOrders.IndexOf(this.DataContext?.SelectedViewModelOrder!)</span>&nbsp; </div>
 
-    <div style="display: inline-block; margin-right: 15px;"><SfButton ID="add" @onclick="@DataContext.AddRecord">Add Data</SfButton></div>
-    <div style="display: inline-block; margin-right: 15px;"><SfButton ID="del" @onclick="@DataContext.DeleteRecord">Delete Data</SfButton></div>
-    <div style="display: inline-block; margin-right: 15px;"><SfButton ID="update" @onclick="@DataContext.UpdateRecord">Update Data</SfButton></div>
-
-    <div class="col-lg-12 control-section">
-	    <div class="content-wrapper">
-		    <div class="row mx-5 px-5">
-			    <SfGrid DataSource="@Bind(x => x.ViewModelOrders)" AllowPaging="false">
-                    <GridColumns>
-                        <GridColumn Field=@nameof(OrderViewModel.OrderID) Uid="@Guid.NewGuid().ToString()" HeaderText="Order ID" IsPrimaryKey="true" TextAlign="@TextAlign.Right" HeaderTextAlign="@TextAlign.Center" Width="140"></GridColumn>
-                        <GridColumn Field=@nameof(OrderViewModel.CustomerID) HeaderText="Customer ID" Width="150" TextAlign="@TextAlign.Right" HeaderTextAlign="@TextAlign.Center"></GridColumn>
-                        <GridColumn Field=@nameof(OrderViewModel.CustomerName) HeaderText="Customer Name" Width="140" TextAlign="@TextAlign.Right" HeaderTextAlign="@TextAlign.Center"></GridColumn>
-                        <GridColumn Field=@nameof(OrderViewModel.OrderDate) HeaderText="Order Date" EditType="EditType.DatePickerEdit" Format="d" TextAlign="TextAlign.Right" HeaderTextAlign="@TextAlign.Center" Type="ColumnType.Date" Width="160"></GridColumn>
-                    </GridColumns>
-                </SfGrid>
-		    </div>
-	    </div>
-    </div>
-}
+<OrdersComponentView DataSource="@DataContext.Items"></OrdersComponentView>

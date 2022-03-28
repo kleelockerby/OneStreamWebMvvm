@@ -4,34 +4,33 @@ namespace OneStreamWebMvvm
 {
     public class CounterViewModel : ViewModelBase
     {
+        public RelayCommand UpdateCommand;
+        public RelayCommand ResetCommand;
+
+        public int MaxCount = 3;
+
         private int currentCount = 1;
-        private int maxCount = 3;      
-
-        private bool isActive = true;
-        public bool IsActive { get => isActive; set => SetProperty(ref isActive, value, nameof(IsActive)); }
-
         public int CurrentCount
         {
             get => currentCount;
-            set => SetProperty(ref currentCount, value, nameof(CurrentCount));
-        }
-
-        public void IncrementCount()
-        {
-            if (this.currentCount < this.maxCount)
+            set
             {
-                currentCount++;
-            }
-            else
-            {
-                this.isActive = !this.isActive;
+                SetProperty(ref currentCount, value, nameof(CurrentCount));
             }
         }
 
-        public void Reset()
+        public string ClassName { get; set; } = "btn btn-primary";
+
+        public CounterViewModel()
         {
-            this.currentCount = 1;
-            this.isActive = !this.isActive;
+            this.UpdateCommand = new RelayCommand(IncrementCount, CanIncrement);
+            this.ResetCommand = new RelayCommand(ResetCounter, CanReset);
         }
+
+        public void IncrementCount() => ++this.CurrentCount;
+        public bool CanIncrement() => this.currentCount < this.MaxCount;
+
+        public void ResetCounter() => this.CurrentCount = 1;
+        public bool CanReset() => this.currentCount == this.MaxCount;
     }
 }

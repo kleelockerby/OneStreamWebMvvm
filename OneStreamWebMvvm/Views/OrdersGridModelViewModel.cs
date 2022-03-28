@@ -9,8 +9,8 @@ namespace OneStreamWebMvvm
 
         public OrderModel? SelectedModelOrder;
         
-        private ViewModelCollection<OrderModel> viewOrders;
-        public ViewModelCollection<OrderModel> ViewOrders
+        private ViewModelCollection<OrderModel>? viewOrders;
+        public ViewModelCollection<OrderModel>? ViewOrders
         {
             get => viewOrders;
             set
@@ -33,25 +33,25 @@ namespace OneStreamWebMvvm
         public void AddRecord()
         {
             OrderModel newOrderModel = new OrderModel(10011, new DateTime(2017, 05, 15), "FREDB", "Fred's Bicycles");
-            ViewOrders.Add(newOrderModel);
+            ViewOrders?.Add(newOrderModel);
             this.SelectedModelOrder = newOrderModel;
         }
 
         public void DeleteRecord()
         {
-            if (ViewOrders.Count() != 0)
+            if (ViewOrders?.Count() != 0)
             {
-                OrderModel orderModel = this.ViewOrders[4];
-                ViewOrders.Remove(orderModel);
+                OrderModel? orderModel = this.ViewOrders?[4];
+                ViewOrders?.Remove(orderModel!);
             }
         }
 
         public void UpdateRecord()
         {
-            OrderModel orderModel = this.ViewOrders[2];
+            OrderModel? orderModel = this.ViewOrders?[2];
             orderModel.CustomerID = "BNESEN";
             orderModel.CustomerName = "Bon Nese app";
-            this.SelectedModelOrder = this.ViewOrders[2];
+            this.SelectedModelOrder = this.ViewOrders?[2];
         }
     }
 }
