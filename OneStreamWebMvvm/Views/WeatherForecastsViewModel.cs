@@ -31,7 +31,7 @@ namespace OneStreamWebMvvm
             this.weatherForecastService = weatherForecastService;
         }
 
-        protected override async Task OnInitializedAsync()
+        public override async Task OnInitializedAsync()
         {
             await Task.Delay(1500);
 

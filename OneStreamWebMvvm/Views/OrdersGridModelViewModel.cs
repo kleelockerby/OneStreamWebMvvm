@@ -24,7 +24,7 @@ namespace OneStreamWebMvvm
             this.ordersService = OrdersService;
         }
 
-        protected override async Task OnInitializedAsync()
+        public override async Task OnInitializedAsync()
         {
             IEnumerable<OrderModel> orderModels = await ordersService?.GetOrderModels()!;
             this.viewOrders = new ViewModelCollection<OrderModel>(orderModels);

@@ -5,65 +5,38 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 {
     public class RelayCommand
     {
+        private Func<bool> canExecute;
         private Action execute;
-        private Action? canExecuteChanged;
-        private bool canExecute;
+        public event EventHandler? CanExecuteChanged;
 
-        public Func<bool> CanExecuteCommand;
+        public RelayCommand(Action Execute) : this(Execute, null!) { }
 
-        public bool CanExecuteCommandValue()
-        {
-            if (CanExecuteCommand != null)
-            {
-                return CanExecuteCommand();
-            }
-            return false;
-        }
-
-        public bool CanExecute
-        {
-            get { return canExecute; }
-            set
-            {
-                if (canExecute != value)
-                {
-                    canExecute = value;
-                    //RaiseCanExecuteChanged();
-                }
-            }
-        }
-
-        public RelayCommand(Action Execute, Func<bool> canExecuteTarget, Action CanExecuteChanged)
-        {
-            this.execute = Execute;
-            this.CanExecuteCommand = canExecuteTarget;
-            this.canExecuteChanged = CanExecuteChanged;
-        }
-
-        public RelayCommand(Action Execute, bool CanExecute)
+        public RelayCommand(Action Execute, Func<bool> CanExecute)
         {
             this.execute = Execute;
             this.canExecute = CanExecute;
-        }
-
-        public RelayCommand(Action Execute, bool CanExecute, Action CanExecuteChanged)
-        {
-            this.execute = Execute;
-            this.canExecute = CanExecute;
-            this.canExecuteChanged = CanExecuteChanged;
         }
 
         public void Execute()
         {
-            if (execute != null)
+            execute();
+        }
+
+        public bool CanExecute()
+        {
+            if (canExecute == null)
             {
-                execute?.Invoke();
+                return true;
             }
+            return canExecute();
         }
 
         public void RaiseCanExecuteChanged()
         {
-            canExecuteChanged?.Invoke();
+            if (CanExecuteChanged != null)
+            {
+                CanExecuteChanged(this, EventArgs.Empty);
+            }
         }
     }
 }

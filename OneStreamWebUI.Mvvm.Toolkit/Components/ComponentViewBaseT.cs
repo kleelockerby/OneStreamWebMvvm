@@ -22,6 +22,18 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             SetDataContext();
         }
 
+        protected override void OnInitialized()
+        {
+            SetDataContext();
+            base.OnInitialized();
+            DataContext?.OnInitialized();
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            await DataContext!.OnInitializedAsync();
+        }
         #nullable disable
         private void SetDataContext()
         {
@@ -39,19 +51,6 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             return AddBinding(DataContext, property);
         }
 
-        protected override void OnInitialized()
-        {
-            SetDataContext();
-            base.OnInitialized();
-            DataContext?.OnInitialized();
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
-            await DataContext!.OnInitializedAsync();
-        }
-
         protected override void OnParametersSet()
         {
             SetParameters();
@@ -65,14 +64,9 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             await DataContext.OnParametersSetAsync();
         }
 
-        public override async Task SetParametersAsync(ParameterView parameters)
+        protected override bool ShouldRender()
         {
-            await base.SetParametersAsync(parameters);
-
-            if (DataContext != null)
-            {
-                await DataContext.SetParametersAsync(parameters);
-            }
+            return DataContext?.ShouldRender() ?? true;
         }
 
         protected override void OnAfterRender(bool firstRender)
@@ -86,9 +80,14 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             await DataContext!.OnAfterRenderAsync(firstRender);
         }
 
-        protected override bool ShouldRender()
+        public override async Task SetParametersAsync(ParameterView parameters)
         {
-            return DataContext?.ShouldRender() ?? true;
+            await base.SetParametersAsync(parameters);
+
+            if (DataContext != null)
+            {
+                await DataContext.SetParametersAsync(parameters);
+            }
         }
 
         private void SetParameters()
@@ -100,6 +99,5 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             viewModelParameterSetter ??= ServiceProvider.GetRequiredService<IViewModelParameterSetter>();
             viewModelParameterSetter.ResolveAndSet(this, DataContext);
         }
-
     }
 }

@@ -39,37 +39,3 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         }
     }
 }
-
-
-/*
-
-<button type="button" class="@($"btn {Class}")" @onclick="Callback" @attributes="InputAttributes">@ChildContent</button>
-
-private void Callback()
-{
-    Command?.Execute(Parameter);
-}
-
-<CommandButton class="btn-sm btn-primary" Command="EditCommand" Parameter="Parameter">Edit</CommandButton>
-<CommandButton class="btn-sm btn-danger" Command="DeleteCommand" Parameter="Parameter">Delete</CommandButton>
-
-[Parameter] public ICommand EditCommand { get; set; }
-[Parameter] public ICommand SaveCommand { get; set; }
-[Parameter] public ICommand DeleteCommand { get; set; }
-[Parameter] public object Parameter { get; set; }
-
-SaveCommand = new DelegateCommand(param => this.Save(), param => this.CanSave);
-
-private bool CanSave (object obj)
-{
-  if(condition) 
-    return true;
-  else
-    return false;
-}
-
-private void Save()
-{
-    //ObjectService.Save()....
-}
-*/

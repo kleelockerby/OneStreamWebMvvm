@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneStreamWebMvvm", "OneStre
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneStreamWebUI.Mvvm.Toolkit", "OneStreamWebUI.Mvvm.Toolkit\OneStreamWebUI.Mvvm.Toolkit.csproj", "{AF1FEC7B-B594-41E4-9AC9-9BA304EA5569}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneStreamWebMvvm.Tests", "OneStreamWebMvvm.Tests\OneStreamWebMvvm.Tests.csproj", "{D198DC6F-5BB6-4059-8FF1-6B1D82E145F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AF1FEC7B-B594-41E4-9AC9-9BA304EA5569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF1FEC7B-B594-41E4-9AC9-9BA304EA5569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF1FEC7B-B594-41E4-9AC9-9BA304EA5569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D198DC6F-5BB6-4059-8FF1-6B1D82E145F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D198DC6F-5BB6-4059-8FF1-6B1D82E145F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D198DC6F-5BB6-4059-8FF1-6B1D82E145F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D198DC6F-5BB6-4059-8FF1-6B1D82E145F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

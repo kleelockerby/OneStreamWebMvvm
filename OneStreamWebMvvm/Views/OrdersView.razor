@@ -1,5 +1,5 @@
 ﻿@page "/ordersview"
-@inherits ComponentViewBase<OrdersViewModel, OrderViewModel>
+@inherits ComponentViewBase<OrdersViewModel>
 @namespace OneStreamWebMvvm.Views
 @using OneStreamWebUI.Mvvm.Toolkit
 @using System.Collections.ObjectModel;
@@ -11,6 +11,7 @@
 	<div><h3 style="color: #000;">Orders</h3></div>
 </div>
 
+@*
 @if (Bind(x => x.ViewModelOrders) == null)
 {
 	<p><em>Loading...</em></p>
@@ -54,7 +55,7 @@ else
 		</div>
 	</div>
 }
-
+*@
 
 <style>
 

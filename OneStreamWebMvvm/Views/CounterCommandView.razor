@@ -2,7 +2,6 @@
 @inherits ComponentViewBase<CounterCommandViewModel>
 @namespace OneStreamWebMvvm
 
-
 <h1>Counter Command</h1>
 
 <div style="margin: 20px 0; padding: 10px; background-color: #F0F0F0; font-size: .85rem;">
@@ -12,9 +11,8 @@
 
 <p style="margin-top: 20px;">Current count: @Bind(x => x.CurrentCount)</p>
 
-<button class="@DataContext.ClassName" disabled="@(DataContext.IsActive == false)" @onclick="DataContext.IncrementCount">Increment Count</button>
-<button class="btn btn-primary" disabled="@(DataContext.IsActive == true)" @onclick="@DataContext.ResetCounter">Reset</button>
-
+<button class="@DataContext.ClassName" disabled="@(DataContext.UpdateCommand.CanExecute() == false)" @onclick="@DataContext.UpdateCommand.Execute">Increment Count</button>&nbsp;&nbsp;
+<button class="btn btn-primary" disabled="@(DataContext.ResetCommand.CanExecute() == false)" @onclick="@DataContext.ResetCounter">Reset</button>
 
 <style>
 	.btn-primary.disabled, .btn-primary:disabled {

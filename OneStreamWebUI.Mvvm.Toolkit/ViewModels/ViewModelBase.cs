@@ -12,18 +12,24 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
-        protected bool IsBatchUpdate = false;
+        private bool isBatchUpdate = false;
 
         public IServiceProvider ServiceProvider { get; set; } = null!;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual void OnInitialized() { }
+        public virtual Task OnInitializedAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         public bool SetProperty<TItem>(ref TItem field, TItem value, [CallerMemberName] string? propertyName = null)
         {
             if (!EqualityComparer<TItem>.Default.Equals(field, value))
             {
                 field = value;
-                if (!IsBatchUpdate)
+                if (!isBatchUpdate)
                 {
                     OnPropertyChanged(propertyName!);
                 }
@@ -32,13 +38,13 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             return false;           
         }
 
-        protected bool SetProperty<TItem>(ref TItem field, TItem value, Action<TItem> callback, [CallerMemberName] string? propertyName = null)
+        public bool SetProperty<TItem>(ref TItem field, TItem value, Action<TItem> callback, [CallerMemberName] string? propertyName = null)
         {
             if (!EqualityComparer<TItem>.Default.Equals(field, value))
             {
                 field = value;
                 callback(value);
-                if (!IsBatchUpdate)
+                if (!isBatchUpdate)
                 {
                     this.OnPropertyChanged(propertyName!); 
                 }
@@ -47,18 +53,18 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             return false;
         }
 
-        protected void SetProperty<TItem>(TItem value, [CallerMemberName] string? propertyName = null)
+        public void SetProperty<TItem>(TItem value, [CallerMemberName] string? propertyName = null)
         {
-            if (!IsBatchUpdate)
+            if (!isBatchUpdate)
             {
                 this.OnPropertyChanged(propertyName!);
             }
         }
 
-        protected void SetProperty<TItem>(TItem value, Action<TItem> callback, [CallerMemberName] string? propertyName = null)
+        public void SetProperty<TItem>(TItem value, Action<TItem> callback, [CallerMemberName] string? propertyName = null)
         {
             callback?.Invoke(value);
-            if (!IsBatchUpdate)
+            if (!isBatchUpdate)
             {
                 this.OnPropertyChanged(propertyName!);
             }
@@ -77,7 +83,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             return false;
         }
 
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        public virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if (propertyChanged == null)
@@ -87,55 +93,48 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             propertyChanged((object)this, e);
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        public virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected internal virtual void OnInitialized() { }
-        
-        protected internal virtual Task OnInitializedAsync()
+        public virtual void OnParametersSet() { }
+
+        public virtual Task OnParametersSetAsync()
         {
             return Task.CompletedTask;
         }
 
-        protected internal virtual void OnParametersSet() { }
-
-        protected internal virtual Task OnParametersSetAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        protected internal void StateHasChanged()
+        public void StateHasChanged()
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
 
-        protected internal virtual bool ShouldRender()
+        public virtual bool ShouldRender()
         {
             return true;
         }
 
-        protected internal virtual void OnAfterRender(bool firstRender) { }
+        public virtual void OnAfterRender(bool firstRender) { }
 
-        protected internal virtual Task OnAfterRenderAsync(bool firstRender)
+        public virtual Task OnAfterRenderAsync(bool firstRender)
         {
             return Task.CompletedTask;
         }
 
-        protected internal virtual Task SetParametersAsync(ParameterView parameters)
+        public virtual Task SetParametersAsync(ParameterView parameters)
         {
             return Task.CompletedTask;
         }
 
         public void BeginUpdate()
         {
-            this.IsBatchUpdate = true;
+            this.isBatchUpdate = true;
         }
 
         public void EndUpdate()
         {
-            this.IsBatchUpdate = false;
+            this.isBatchUpdate = false;
         }
     }
 }

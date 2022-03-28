@@ -21,7 +21,7 @@ namespace OneStreamWebMvvm
             this.navigationManager?.NavigateTo($"/parametersview/{NewName}");
         }
 
-        protected override void OnInitialized()
+        public override void OnInitialized()
         {
             navigationManager = ServiceProvider.GetRequiredService<NavigationManager>();
         }

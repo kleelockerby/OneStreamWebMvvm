@@ -14,7 +14,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
         private IBindingFactory bindingFactory = null!;
         private HashSet<IBinding> bindings = new();
         private IWeakEventManager weakEventManager = null!;
-
+        private IViewModelParameterSetter? viewModelParameterSetter;
         private int index = 1;
 
         [Inject] protected IServiceProvider ServiceProvider { get; set; } = default!;
@@ -68,6 +68,26 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 
         protected static PropertyInfo ResolveDataContext<TViewModel, TValue>(TViewModel viewModel, Expression<Func<TViewModel, TValue>> property)
         {
+            if (viewModel is null)
+                throw new BindingException("ViewModelType is null");
+
+            if (property is null)
+                throw new BindingException("Property expression is null");
+
+            if (!(property.Body is MemberExpression m))
+                throw new BindingException("Binding member needs to be a property");
+
+            if (!(m.Member is PropertyInfo p))
+                throw new BindingException("Binding member needs to be a property");
+
+            if (typeof(TViewModel).GetProperty(p.Name) is null)
+                throw new BindingException($"Cannot find property {p.Name} in type {viewModel.GetType().FullName}");
+
+            return p;
+        }
+
+        /*protected static PropertyInfo ResolveDataContext<TViewModel, TValue>(TViewModel viewModel, Expression<Func<TViewModel, TValue>> property)
+        {
             string propertyName = string.Empty;
             try
             {
@@ -99,8 +119,13 @@ namespace OneStreamWebUI.Mvvm.Toolkit
                 throw new Exception($"An Unknow Exception Occured: {ex.Message}");
             }
             return null!;
-        }
+        }*/
 
+        protected void SetViewModelParameters(ViewModelBase viewModel)
+        {
+            viewModelParameterSetter ??= ServiceProvider.GetRequiredService<IViewModelParameterSetter>();
+            viewModelParameterSetter.ResolveAndSet(this, viewModel);
+        }
         #region IDisposable
 
         public void Dispose()

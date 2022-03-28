@@ -10,66 +10,35 @@ namespace OneStreamWebMvvm
     public class CounterCommandViewModel : ViewModelBase
     {
         public RelayCommand UpdateCommand;
+        public RelayCommand ResetCommand;
+
+        public int MaxCount = 3;
 
         private int currentCount = 1;
-        private int maxCount = 3;
-
-        private bool isActive = true;
-        public bool IsActive 
-        { 
-            get => isActive; 
-            set => SetProperty(ref isActive, value, nameof(IsActive)); 
-        }
-
         public int CurrentCount
         {
             get => currentCount;
             set
             {
                 SetProperty(ref currentCount, value, nameof(CurrentCount));
-            } 
+            }
         }
 
         public string ClassName { get; set; } = "btn btn-primary";
 
         public CounterCommandViewModel()
-        {
-            this.UpdateCommand = new RelayCommand(IncrementCount, CanIncrementCount, CanIncrementChanged);
+        {        
+
+
+            this.UpdateCommand = new RelayCommand(IncrementCount, CanIncrement);
+            this.ResetCommand = new RelayCommand(ResetCounter, CanReset);
         }
 
-        public void IncrementCount()
-        {
-            if (UpdateCommand.CanExecuteCommand())
-                currentCount++;
-            else
-            {
-                UpdateCommand.RaiseCanExecuteChanged();
-            }
-        }
+        public void IncrementCount() => ++this.CurrentCount;
+        public bool CanIncrement() => this.currentCount < this.MaxCount;
 
-        public bool CanIncrementCount()
-        {
-            if(this.currentCount < this.maxCount)
-            {
-                this.IsActive = true;
-            }
-            else
-            {
-                this.IsActive = false;
-            }
-            return this.IsActive;
-        }
-
-        public void CanIncrementChanged()
-        {
-            this.IsActive = false;
-        }
-
-        public void ResetCounter()
-        {
-            this.CurrentCount = 1;
-            this.IsActive = !this.IsActive;
-        }
+        public void ResetCounter() => this.CurrentCount = 1;
+        public bool CanReset() => this.currentCount == this.MaxCount;
     }
 }
 
