@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneStreamWebMvvm.Tests
 {
-    internal class OrdersTest
+    public class CounterTests
     {
     }
 }

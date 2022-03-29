@@ -17,8 +17,4 @@
     <ProjectReference Include="..\OneStreamWebUI.Mvvm.Toolkit\OneStreamWebUI.Mvvm.Toolkit.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\ButtonCommand\" />
-  </ItemGroup>
-
 </Project>
