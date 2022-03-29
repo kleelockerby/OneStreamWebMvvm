@@ -1,0 +1,11 @@
+﻿@inherits ComponentViewBase<MessageViewModel>
+@namespace OneStreamWebMvvm
+@using OneStreamWebUI.Mvvm.Toolkit
+
+<div style="margin: 20px;">
+
+    <input type="text" value="@DataContext.MessageText" @onchange="DataContext.OnTextChanged" />
+
+    <p style="margin-top: 10px;">Message: @Bind(x => x.MessageText)</p>
+    <button class="@DataContext.ClassName" disabled="@(DataContext?.Command?.CanExecute() == false)" @onclick="@DataContext.Command.Execute">Send Message</button>
+</div>

@@ -3,46 +3,28 @@ using System.Windows.Input;
 
 namespace OneStreamWebUI.Mvvm.Toolkit
 {
-    public class RelayCommand<T>
+    public class RelayCommand<TItem> : RelayCommand
     {
-        private Action<T> execute;
-        private Func<T, bool> canExecute;
-        private Action<T> canExecuteChanged;
+        private readonly Action<TItem>? action;
+        private readonly Func<TItem, bool>? canExecute;
 
-        public event EventHandler Executed;
+        protected RelayCommand() { }
 
-        public RelayCommand(Action<T> Execute, Func<T, bool> CanExecute)
+        public RelayCommand(Action<TItem> action) : this(action, null!) { }
+
+        public RelayCommand(Action<TItem> action, Func<TItem, bool> canExecute)
         {
-            this.execute = Execute;
-            this.canExecute = CanExecute;
-        }
-
-        public RelayCommand(Action<T> Execute, Func<T, bool> CanExecute, Action<T> CanExecuteChanged)
-        {
-            this.execute = Execute;
-            this.canExecute = CanExecute;
-            this.canExecuteChanged = CanExecuteChanged;
+            this.action = action;
+            this.canExecute = canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            return this.canExecute is null || this.canExecute((T)parameter);
-        }
-        
-        public void Execute(object parameter)
-        {
-            this.InvokeAction(parameter);
-            OnExecuted();
-        }
-
-        public void InvokeAction(object parameter)
-        {
-            this.execute((T)parameter);
-        }
-
-        protected void OnExecuted()
-        {
-            this.Executed?.Invoke(this, null);
+            if (canExecute == null)
+            {
+                return true;
+            }
+            return canExecute((TItem)parameter);
         }
     }
 }

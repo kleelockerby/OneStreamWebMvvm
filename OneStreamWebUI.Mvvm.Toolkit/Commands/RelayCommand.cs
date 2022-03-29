@@ -5,24 +5,28 @@ namespace OneStreamWebUI.Mvvm.Toolkit
 {
     public class RelayCommand
     {
-        private Func<bool> canExecute;
-        private Action execute;
+        private Func<bool>? canExecute;
+        private Action? execute;
         public event EventHandler? CanExecuteChanged;
 
-        public RelayCommand(Action Execute) : this(Execute, null!) { }
+        protected RelayCommand() { }
 
-        public RelayCommand(Action Execute, Func<bool> CanExecute)
+        public RelayCommand(Action Execute)
         {
             this.execute = Execute;
+        }
+
+        public RelayCommand(Action Execute, Func<bool> CanExecute) : this(Execute)
+        {
             this.canExecute = CanExecute;
         }
 
         public void Execute()
         {
-            execute();
+            execute?.Invoke();
         }
 
-        public bool CanExecute()
+        public virtual bool CanExecute()
         {
             if (canExecute == null)
             {
