@@ -12,13 +12,13 @@ namespace OneStreamWebMvvm
 
         public OrderComponentViewModel? SelectedViewModelOrder;
 
-        private ViewModelCollection<OrderComponentViewModel>? viewModelOrders;
-        public ViewModelCollection<OrderComponentViewModel>? ViewModelOrders  { get => viewModelOrders; set => SetProperty(ref viewModelOrders, value, nameof(ViewModelOrders)); }
+        private ViewModelCollectionBase<OrderComponentViewModel>? viewModelOrders;
+        public ViewModelCollectionBase<OrderComponentViewModel>? ViewModelOrders  { get => viewModelOrders; set => SetProperty(ref viewModelOrders, value, nameof(ViewModelOrders)); }
 
         public override void OnParametersSet()
         {
             List<OrderComponentViewModel> ViewModelOrdersList = new List<OrderComponentViewModel>(DataSource.Select(x => new OrderComponentViewModel(x)));
-            this.ViewModelOrders = new ViewModelCollection<OrderComponentViewModel>(ViewModelOrdersList);
+            this.viewModelOrders = new ViewModelCollectionBase<OrderComponentViewModel>(ViewModelOrdersList);
         }
 
         public void AddOrder()

@@ -19,7 +19,7 @@ namespace OneStreamWebMvvm
         {
             IEnumerable<OrderModel> orders = await ordersService?.GetOrderModels()!;
             IEnumerable<OrderViewModel> orderViewModels = orders.Select(x => new OrderViewModel(x));
-            InitializeList(orderViewModels);
+            Initialize(orderViewModels);
         }
 
         public void UpdateOrder()

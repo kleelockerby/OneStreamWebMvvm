@@ -9,8 +9,8 @@ namespace OneStreamWebMvvm
 
         public OrderModel? SelectedModelOrder;
         
-        private ViewModelCollection<OrderModel>? viewOrders;
-        public ViewModelCollection<OrderModel>? ViewOrders
+        private ViewModelCollectionBase<OrderModel>? viewOrders;
+        public ViewModelCollectionBase<OrderModel>? ViewOrders
         {
             get => viewOrders;
             set
@@ -27,7 +27,7 @@ namespace OneStreamWebMvvm
         public override async Task OnInitializedAsync()
         {
             IEnumerable<OrderModel> orderModels = await ordersService?.GetOrderModels()!;
-            this.viewOrders = new ViewModelCollection<OrderModel>(orderModels);
+            this.viewOrders = new ViewModelCollectionBase<OrderModel>(orderModels);
         }
 
         public void AddRecord()

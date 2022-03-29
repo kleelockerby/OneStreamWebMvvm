@@ -22,7 +22,7 @@ namespace OneStreamWebUI.Mvvm.Toolkit
             this.list = viewModel.ToList();
         }
 
-        public void InitializeList(IEnumerable<TViewModel> viewModel)
+        public void Initialize(IEnumerable<TViewModel> viewModel)
         {
             this.list = viewModel.ToList();
         }
