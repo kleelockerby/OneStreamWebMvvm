@@ -1,0 +1,36 @@
+﻿@namespace OneStreamWebMvvm
+
+<div class="@classNames"></div>
+
+@code {
+    private string classNames = "sb-body-overlay";
+    private bool isModalType { get; set; }
+
+    public void Hide()
+    {
+        classNames = WebConstants.AddClass(classNames, WebConstants.HIDDEN);
+        StateHasChanged();
+    }
+
+    public void Show()
+    {
+        classNames = WebConstants.RemoveClass(classNames, WebConstants.HIDDEN);
+        StateHasChanged();
+    }
+
+    public void ShowModalSpinner(bool isModelSpinner = true)
+    {
+        isModalType = isModelSpinner;
+        if (isModelSpinner)
+        {
+            classNames = WebConstants.AddClass(classNames, WebConstants.MODAL_CLASS);
+            classNames = WebConstants.RemoveClass(classNames, WebConstants.HIDDEN);
+        }
+        else
+        {
+            classNames = WebConstants.RemoveClass(classNames, WebConstants.MODAL_CLASS);
+            classNames = WebConstants.AddClass(classNames, WebConstants.HIDDEN);
+        }
+        StateHasChanged();
+    }
+}

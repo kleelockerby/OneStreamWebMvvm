@@ -1,0 +1,68 @@
+[
+ {
+   "productID": 1,
+   "name": "Chai",
+   "description": "Tea",
+   "price": 18.23
+ },
+ {
+   "productID": 2,
+   "name": "Chang",
+   "description": "Chinese Tea",
+   "price": 19.23
+ },
+ {
+   "productID": 3,
+   "name": "Aniseed Syrup",
+   "description": "Pancake Syrup",
+   "price": 10.55
+ },
+ {
+   "productID": 4,
+   "name": "Chef Anton's Cajun Seasoning",
+   "description": "The Best from New Orleans",
+   "price": 22.99
+ },
+ {
+   "productID": 5,
+   "name": "Chef Anton's Gumbo Mix",
+   "description": "Even Better from New Orleans",
+   "price": 21.35
+ },
+ {
+   "productID": 6,
+   "name": "Grandma's Boysenberry Spread",
+   "description": "Who in the World likes Boysenberry",
+   "price": 25.55
+ },
+ {
+   "productID": 7,
+   "name": "Uncle Bob's Organic Dried Pears",
+   "description": "Not our Bob, but Dehydrated Pears, Really?",
+   "price": 30.44
+ },
+ {
+   "productID": 8,
+   "name": "Northwoods Cranberry Sauce",
+   "description": "Better than the Boysenberry",
+   "price": 40.97
+ },
+ {
+   "productID": 14,
+   "name": "Tofu",
+   "description": "You Got to be Kidding Me. 1960s San Fransisco",
+   "price": 23.25
+ },
+ {
+   "productID": 17,
+   "name": "Alice Mutton",
+   "description": "Mutton, as in Goat?",
+   "price": 39.15
+ },
+ {
+   "productID": 21,
+   "name": "Sir Rodney's Scones",
+   "description": "Scones, this is A Much Needed Improvement",
+   "price": 10.15
+ }
+]

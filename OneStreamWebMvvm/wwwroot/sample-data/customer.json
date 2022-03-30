@@ -1,0 +1,47 @@
+[
+ {
+   "customerID": 1,
+   "firstName": "Ken",
+   "lastName": "Ashmus"
+ },
+ {
+   "customerID": 16,
+   "firstName": "David",
+   "lastName": "Bradley"
+ },
+ {
+   "customerID": 23,
+   "firstName": "Mary",
+   "lastName": "Gibson"
+ },
+ {
+   "customerID": 273,
+   "firstName": "Brian",
+   "lastName": "Welcker"
+ },
+ {
+   "customerID": 274,
+   "firstName": "Stephen",
+   "lastName": "Jiang"
+ },
+ {
+   "customerID": 275,
+   "firstName": "Michael",
+   "lastName": "Blythe"
+ },
+ {
+   "customerID": 276,
+   "firstName": "Linda",
+   "lastName": "Mitchell"
+ },
+ {
+   "customerID": 285,
+   "firstName": "Helen",
+   "lastName": "Duvall"
+ },
+ {
+   "customerID": 286,
+   "firstName": "Sam",
+   "lastName": "Strong"
+ }
+]

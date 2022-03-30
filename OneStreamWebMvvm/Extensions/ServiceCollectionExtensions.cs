@@ -20,6 +20,8 @@ namespace OneStreamWebMvvm
             serviceCollection.AddTransient<OrdersGridModelViewModel>();
             serviceCollection.AddTransient<OrdersComponentViewModel>();
             serviceCollection.AddTransient<OrderComponentViewModel>();
+            serviceCollection.AddTransient<ShoppingCartItemViewModel>();
+            serviceCollection.AddTransient<ShoppingCartViewModel>();
             serviceCollection.AddTransient<MessageViewModel>();
             serviceCollection.AddTransient<MessageListenerViewModel>();
             return serviceCollection;
@@ -29,6 +31,9 @@ namespace OneStreamWebMvvm
         {
             serviceCollection.AddSingleton<IWeatherForecastService, WeatherForecastService>();
             serviceCollection.AddSingleton<IOrdersService, OrdersService>();
+            serviceCollection.AddSingleton<ICartItemService, CartItemService>();
+            serviceCollection.AddSingleton<IProductService, ProductService>();
+            serviceCollection.AddSingleton<ICustomerService, CustomerService>();
             return serviceCollection;
         }
     }

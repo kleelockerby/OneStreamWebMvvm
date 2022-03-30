@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneStreamWebMvvm", "OneStre
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneStreamWebUI.Mvvm.Toolkit", "OneStreamWebUI.Mvvm.Toolkit\OneStreamWebUI.Mvvm.Toolkit.csproj", "{AF1FEC7B-B594-41E4-9AC9-9BA304EA5569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneStreamWebMvvm.Tests", "OneStreamWebMvvm.Tests\OneStreamWebMvvm.Tests.csproj", "{D198DC6F-5BB6-4059-8FF1-6B1D82E145F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneStreamWebMvvm.Tests", "OneStreamWebMvvm.Tests\OneStreamWebMvvm.Tests.csproj", "{D198DC6F-5BB6-4059-8FF1-6B1D82E145F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
