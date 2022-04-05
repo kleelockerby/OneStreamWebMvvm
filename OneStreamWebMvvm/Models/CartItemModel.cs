@@ -12,37 +12,30 @@
 		public int? ProductID => productID;
 		public string? Name => name;
 		public int? Quantity => quantity;
-
 		public DateTime OrderDate => orderDate;
-		
-		//public ProductModel Product { get; set; }
 
-		/*private decimal? quantity;
-		public decimal? Quantity
-		{
-			get => quantity;
-			set
-			{
-				this.quantity = value;
-				if (!Equals(quantity, value))
-				{
-					NotifyModelChanged();
-				}
-			}
-		}*/
+#nullable disable
+		public string QuantityString { get => Quantity?.ToString(); set { quantity = Int32.Parse(value); } }
+
+		public ProductModel? Product { get; set; }
 
 		public event Action? ModelChanged;
 		private void NotifyModelChanged() => ModelChanged?.Invoke();
 
-		//public decimal? Total { get { return (decimal?)Quantity * Product.Price; } }
+        public decimal? Total
+        {
+            get { return (Product != null) ? (decimal?)Quantity * Product?.Price : 0.0M; }
 
-		public CartItemModel(int? cartID, int? productID, string? name, int? quantity, DateTime orderDate)
+        }
+
+        public CartItemModel(int? cartID, int? productID, string? name, int? quantity, DateTime orderDate)
 		{
 			this.cartID = cartID;
 			this.productID = productID;
 			this.name = name;
 			this.quantity = quantity;
 			this.orderDate = orderDate;
+			this.Product = new ProductModel();
 		}
 	}
 }

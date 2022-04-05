@@ -3,55 +3,104 @@
 @namespace OneStreamWebMvvm
 @using OneStreamWebUI.Mvvm.Toolkit
 
-@if (Bind(x => x.CartItems) == null)
+@if (Bind(x => x.ProductItems) == null)
 {
 	<p><em>Loading...</em></p>
-	<SpinnerComponent @ref="DataContext.SpinnerRef"></SpinnerComponent>
 }
 else
 {
-	<div class="content px-4">
-		<h1>Shopping Cart</h1>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="grid-mvc">
-					<div class="grid-wrap">
-						<div class="row">
-							<div class="table-wrap">
-								<div class="grid-table-wrap">
-									<table class="table grid-table striped">
-										<thead>
-											<tr>
-												<th class="grid-header" style="width: 40px;">Cart ID</th>
-												<th class="grid-header" style="width: 40px;">Product ID</th>
-												<th class="grid-header" style="width: 130px;">Product Name</th>
-												<th class="grid-header" style="width: 40px;">Quantiy</th>
-												<th class="grid-header" style="width: 80px;">Order Date</th>
-												<th class="grid-header" style="width: 70px;">Unit Price</th>
-											@*	<th class="grid-header" style="width: 100px;">Item Total</th>*@
-											</tr>
-										</thead>
-										<tbody>
-											@foreach (var cartItemViewModel in Bind(x => x.CartItems)!)
-											{
-												<tr class="grid-row">
-													<td class="grid-cell" style="width: 40px;">@cartItemViewModel.CartID</td>
-													<td class="grid-cell" style="width: 40px;">@cartItemViewModel.ProductID</td>
-													<td class="grid-cell" style="width: 130px;">@cartItemViewModel.Name</td>
-													<td class="grid-cell" style="width: 40px;">@cartItemViewModel.Quantity</td>
-													<td class="grid-cell" style="width: 80px;">@cartItemViewModel.OrderDate.ToShortDateString()</td>
-													<td class="grid-cell" style="width: 70px;">@string.Format("{0:C}", @cartItemViewModel.Price)</td>
-													@*<td class="grid-cell" style="width: 100px;">@cartItemViewModel.Total</td>*@
-												</tr>
-											}
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+<div class="content px-4">
+	<h3>Shopping Products</h3>
+	<div class="row" style="border: 1px solid #ccc;">
+		<div class="col-md-12 grid-mvc grid-wrap">
+			<div class="row table-wrap grid-table-wrap">
+				<table class="table grid-table striped">
+					<thead>
+						<tr>
+							<th class="grid-header" style="width: 40px;">Cart ID</th>
+							<th class="grid-header" style="width: 40px;">Product ID</th>
+							<th class="grid-header" style="width: 220px;">Product Name</th>
+							<th class="grid-header" style="width: 40px;">Quantiy</th>
+							<th class="grid-header" style="width: 70px;">Unit Price</th>
+							<th class="grid-header" style="width: 100px;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var cartItemViewModel in Bind(x => x.ProductItems)!)
+						{
+							<tr class="grid-row">
+								<td class="grid-cell" style="width: 40px;">@cartItemViewModel.CartID</td>
+								<td class="grid-cell" style="width: 40px;">@cartItemViewModel.ProductID</td>
+								<td class="grid-cell" style="width: 130px;">@cartItemViewModel.Name</td>
+								<td class="grid-cell" style="width: 40px;">@cartItemViewModel.Quantity</td>
+								<td class="grid-cell" style="width: 70px;">@string.Format("{0:C}", @cartItemViewModel.Price)</td>
+								<td class="grid-cell" style="width: 100px;"><button class="btn btn-primary btn-xs" type="button" @onclick="@( () => @DataContext.OnButtonClick(cartItemViewModel))">Add To Cart</button></td>
+							</tr>
+						}
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
+	<h3 style="margin-top: 15px;">Shopping Cart</h3>
+	<div class="row" style="border: 1px solid #ccc; margin-top: 10px;">
+		<div class="col-md-12 grid-mvc grid-wrap">
+			<div class="row table-wrap grid-table-wrap">
+				<table id="shoppingCart" class="table grid-table striped">
+						<thead>
+							<tr>
+								<th class="grid-header" style="width: 40px;">Cart ID</th>
+								<th class="grid-header" style="width: 40px;">Product ID</th>
+								<th class="grid-header" style="width: 220px;">Product Name</th>
+								<th class="grid-header" style="width: 40px;">Quantiy</th>
+								<th class="grid-header" style="width: 70px;">Unit Price</th>
+								<th class="grid-header" style="width: 100px;">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if(DataContext.ShoppingCart != null)
+							{
+								foreach (var cartItemModel in Bind(x => x.Items)!)
+								{
+									<tr class="grid-row">
+										<td class="grid-cell" style="width: 40px;">@cartItemModel.CartID</td>
+										<td class="grid-cell" style="width: 40px;">@cartItemModel.ProductID</td>
+										<td class="grid-cell" style="width: 130px;">@cartItemModel.Name</td>
+										<td class="grid-cell" style="width: 40px;">
+											<TextBoxView @bind-Value="@cartItemModel.QuantityString" Style="width: 34px;"></TextBoxView>
+										</td>
+										<td class="grid-cell" style="width: 70px;">@string.Format("{0:C}", @cartItemModel?.Product?.Price)</td>
+										<td class="grid-cell" style="width: 100px;">@string.Format("{0:C}", @cartItemModel?.Total)</td>
+									</tr>
+								}
+								<tr>
+									<td colspan="5">Total:</td>
+									<td>@DataContext.ShoppingCart.Total</td>
+								</tr>
+							}
+							
+						</tbody>
+					</table>
+			</div>
+		</div>
+	</div>
+</div>
 }
+
+<style>
+
+	.btn{ 
+		display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.175rem 0.45rem;
+    font-size: .75rem;
+    line-height: .95;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out; }
+
+</style>

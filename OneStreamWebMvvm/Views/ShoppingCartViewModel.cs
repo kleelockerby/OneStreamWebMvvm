@@ -6,44 +6,44 @@ namespace OneStreamWebMvvm
 #nullable disable
 	public class ShoppingCartViewModel : ViewModelBase
 	{
-		private readonly ICartItemService? CartItemService;
-		private readonly IProductService? ProductService;
+		private readonly ICartItemService CartItemService;
+		private readonly IProductService ProductService;
 
-		public CartModel ShoppingCart { get; set; } = new CartModel();
-		public CartItemModel? SelectedCartItemModel { get; set; }
-		public SpinnerComponent? SpinnerRef { get; set; }
+		public ViewModelCollectionBase<ShoppingCartItemViewModel> ProductItems { get; private set; }
+		public ViewModelCollectionBase<CartItemModel> Items { get => ShoppingCart.Items; }
+		public CartModel ShoppingCart { get; set; }
 
-		private ViewModelCollectionBase<ShoppingCartItemViewModel>? cartItems;
-		public ViewModelCollectionBase<ShoppingCartItemViewModel>? CartItems
-		{
-			get => cartItems;
-			set
-			{
-				SetProperty(ref cartItems, value, nameof(CartItems));
-			}
-		}
-
-		public ShoppingCartViewModel(ICartItemService? cartItemService, IProductService? productService)
+		public ShoppingCartViewModel(ICartItemService cartItemService, IProductService productService)
 		{
 			this.CartItemService = cartItemService;
 			this.ProductService = productService;
-			SpinnerRef?.Show();
 		}
 
 		public override async Task OnInitializedAsync()
 		{
-			IEnumerable<CartItemModel> cartModelItems = await CartItemService?.GetCartItemModels()!;
+			IEnumerable<CartItemModel> cartModelItems = await CartItemService.GetCartItemModels()!;
 			IEnumerable<ProductModel> productModels = await ProductService.GetProductModels()!;
-
-			this.cartItems = new ViewModelCollectionBase<ShoppingCartItemViewModel>();
+			this.ShoppingCart = new CartModel();
+			this.ProductItems = new ViewModelCollectionBase<ShoppingCartItemViewModel>();
 
 			foreach (CartItemModel cartItemModel in cartModelItems)
 			{
 				ProductModel product = productModels.Where(p => p.ProductID == cartItemModel.ProductID).FirstOrDefault();
-				ShoppingCartItemViewModel viewItemModel = new ShoppingCartItemViewModel(cartItemModel, product.Price);
-				this.cartItems.Add(viewItemModel);
+				cartItemModel.Product = product;
+				ShoppingCartItemViewModel viewItemModel = new ShoppingCartItemViewModel(cartItemModel);
+				this.ProductItems.Add(viewItemModel);
 			}
-			SpinnerRef?.Hide();
+		}
+
+		public void OnButtonClick(ShoppingCartItemViewModel cartItemViewModel)
+        {
+			AddCartitem(cartItemViewModel);
+        }
+
+		public void AddCartitem(ShoppingCartItemViewModel cartItemViewModel)
+		{
+			this.ProductItems.Remove(cartItemViewModel);
+			this.ShoppingCart.Items.Add(cartItemViewModel.CartItemModel);
 		}
 	}
 }

@@ -5,8 +5,8 @@ namespace OneStreamWebMvvm
 {
 	public class ShoppingCartItemViewModel : ViewModelBase
 	{
-		private CartItemModel cartItemModel;
-		private ProductModel? productModel;
+		private CartItemModel? cartItemModel;
+		public CartItemModel? CartItemModel { get => cartItemModel; set { SetProperty(ref cartItemModel, value, nameof(CartItemModel)); } }
 
 		private int? cartID;
 		public int? CartID { get => cartID; set { SetProperty(ref cartID, value, nameof(CartID)); } }
@@ -26,17 +26,18 @@ namespace OneStreamWebMvvm
 		private decimal? price;
 		public decimal? Price { get => price; set { SetProperty(ref price, value, nameof(Price)); } }
 
-		//public decimal? Total { get => cartItemModel.Total; }
+		public decimal? Total { get; set; }
 
-		public ShoppingCartItemViewModel(CartItemModel CartItemModel, decimal? price)
+		public ShoppingCartItemViewModel(CartItemModel? CartItemModel)
 		{
 			this.cartItemModel = CartItemModel;
-			this.cartID =cartItemModel.CartID;
-			this.productID = cartItemModel.ProductID;
-			this.name = cartItemModel.Name;
-			this.quantity = cartItemModel.Quantity;
+			this.cartID =cartItemModel?.CartID;
+			this.productID = cartItemModel?.ProductID;
+			this.name = cartItemModel?.Name;
+			this.quantity = cartItemModel?.Quantity;
 			this.orderDate = cartItemModel.OrderDate;
-			this.price = price;
+			this.price = cartItemModel?.Product?.Price;
+			this.Total = cartItemModel?.Total;
 		}
 	}
 }

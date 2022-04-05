@@ -1,0 +1,15 @@
+﻿@namespace OneStreamWebMvvm
+
+<input class="@ClassNames"
+       style="@Style"
+       value="@CurrentValue"
+       @onchange="@OnChangeAsync"
+       @oninput="@OnInputAsync"
+       @onclick="@OnClickHandler"
+       @onclick:preventDefault="@PreventDefault"
+       placeholder="@Placeholder"
+       disabled="@Disabled"
+       readonly="@ReadOnly"
+       maxlength="@MaxLength"
+       size="@VisibleCharacters"
+       @attributes="@Attributes" />

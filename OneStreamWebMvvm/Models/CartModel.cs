@@ -1,11 +1,15 @@
-﻿
+﻿using OneStreamWebUI.Mvvm.Toolkit;
+
 namespace OneStreamWebMvvm
 {
 	public class CartModel
 	{
-		public List<CartItemModel> Items { get; set; } = new List<CartItemModel>();
+		public ViewModelCollectionBase<CartItemModel> Items { get; set; } = new ViewModelCollectionBase<CartItemModel>();
+        
+        public event Action? ModelChanged;
+		private void NotifyModelChanged() => ModelChanged?.Invoke();
 
-       /* public decimal? Total
+        public decimal? Total
         {
             get
             {
@@ -16,6 +20,11 @@ namespace OneStreamWebMvvm
                 }
                 return total;
             }
-        }*/
+        }
+
+        public CartModel()
+        {
+            this.Items = new ViewModelCollectionBase<CartItemModel>();
+        }
     }
 }
