@@ -31,9 +31,10 @@ namespace OneStreamWebMvvm
         {
             serviceCollection.AddSingleton<IWeatherForecastService, WeatherForecastService>();
             serviceCollection.AddSingleton<IOrdersService, OrdersService>();
-            serviceCollection.AddSingleton<ICartItemService, CartItemService>();
             serviceCollection.AddSingleton<IProductService, ProductService>();
             serviceCollection.AddSingleton<ICustomerService, CustomerService>();
+            serviceCollection.AddSingleton<IProductRepository, ProductRepository>();
+            serviceCollection.AddSingleton<ICartItemService, CartItemService>();
             return serviceCollection;
         }
     }

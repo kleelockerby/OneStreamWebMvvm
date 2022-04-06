@@ -6,8 +6,8 @@ namespace OneStreamWebMvvm
 	{
 		public ViewModelCollectionBase<CartItemModel> Items { get; set; } = new ViewModelCollectionBase<CartItemModel>();
         
-        public event Action? ModelChanged;
-		private void NotifyModelChanged() => ModelChanged?.Invoke();
+        //public event Action? ModelChanged;
+		//private void NotifyModelChanged() => ModelChanged?.Invoke();
 
         public decimal? Total
         {
