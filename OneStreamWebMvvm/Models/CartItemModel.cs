@@ -5,22 +5,26 @@
 		private int? cartID;
 		private int? productID;
 		private string? name;
-		private int? quantity;
 		private DateTime orderDate;
 
-		public int? CartID => cartID;
-		public int? ProductID => productID;
-		public string? Name => name;
-		public int? Quantity => quantity;
-		public DateTime OrderDate => orderDate;
+		public int? CartID { get; set; }
+		public int? ProductID { get; set; }
+		public string? Name { get; set; }
+		public DateTime OrderDate { get; set; }
 
-#nullable disable
+		private int? quantity;
+		public int? Quantity
+		{
+			get => quantity;
+			set
+			{
+				this.quantity = value;
+			}
+		}
+
 		public string QuantityString { get => Quantity?.ToString(); set { quantity = Int32.Parse(value); } }
 
 		public ProductModel? Product { get; set; }
-
-		public event Action? ModelChanged;
-		private void NotifyModelChanged() => ModelChanged?.Invoke();
 
         public decimal? Total
         {
@@ -28,7 +32,9 @@
 
         }
 
-        public CartItemModel(int? cartID, int? productID, string? name, int? quantity, DateTime orderDate)
+		public CartItemModel() { }
+
+		public CartItemModel(int? cartID, int? productID, string? name, int? quantity, DateTime orderDate)
 		{
 			this.cartID = cartID;
 			this.productID = productID;

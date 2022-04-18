@@ -14,7 +14,7 @@ namespace OneStreamWebMvvm
             this.httpClient = httpClient;
         }
 
-        public  Task<IEnumerable<CartItemModel>>? GetCartItemModels()
+        public Task<IEnumerable<CartItemModel>>? GetCartItemModels()
         {
             return httpClient.GetFromJsonAsync<IEnumerable<CartItemModel>>("sample-data/cartItem.json")!;
         }

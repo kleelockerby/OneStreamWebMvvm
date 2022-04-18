@@ -7,7 +7,6 @@ namespace OneStreamWebMvvm
 	public class ShoppingCartViewModel : ViewModelBase
 	{
 		private readonly ICartItemService CartItemService;
-		//private readonly IProductService ProductService;
 		private readonly IProductRepository ProductRepository;
 
 		public ViewModelCollectionBase<ShoppingCartItemViewModel> ProductItems { get; private set; }
@@ -23,26 +22,24 @@ namespace OneStreamWebMvvm
 		public override async Task OnInitializedAsync()
 		{
 			IEnumerable<CartItemModel> cartModelItems = await CartItemService.GetCartItemModels()!;
-			//IEnumerable<ProductModel> productModels = await ProductService.GetProductModels()!;
 			IEnumerable<ProductModel> productModels = await GetProductRepository();
 
 			this.ShoppingCart = new CartModel();
 			this.ProductItems = new ViewModelCollectionBase<ShoppingCartItemViewModel>();
 
-			foreach (CartItemModel cartItemModel in cartModelItems)
-			{
-				ProductModel product = productModels.Where(p => p.ProductID == cartItemModel.ProductID).FirstOrDefault();
-				cartItemModel.Product = product;
-				ShoppingCartItemViewModel viewItemModel = new ShoppingCartItemViewModel(cartItemModel);
-				this.ProductItems.Add(viewItemModel);
-			}
-		}
+            foreach (CartItemModel cartItemModel in cartModelItems)
+            {
+                ProductModel product = productModels.Where(p => p.ProductID == cartItemModel.ProductID).FirstOrDefault();
+                cartItemModel.Product = product;
+                ShoppingCartItemViewModel viewItemModel = new ShoppingCartItemViewModel(cartItemModel);
+                this.ProductItems.Add(viewItemModel);
+            }
+        }
 
 		public async Task<IEnumerable<ProductModel>> GetProductRepository()
         {
 			IEnumerable<ProductModel> products = await ProductRepository.GetProducts();
 			return products;
-
 		}
 
 		public void OnButtonClick(ShoppingCartItemViewModel cartItemViewModel)
